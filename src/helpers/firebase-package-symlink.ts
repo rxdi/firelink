@@ -16,59 +16,60 @@ export async function createFirebasePackageSymlink() {
     })
   );
   const originalPackageJson = JSON.parse(JSON.stringify(packageJson));
-  if (packageJson && packageJson.fireDependencies) {
-    const linkedDepndencies = packageJson.fireDependencies;
-    const dependencies = Object.keys(linkedDepndencies).map(dep => ({
-      dep,
-      folder: linkedDepndencies[dep]
-    }));
-    async function modifyJson() {
+
+  function revertJson() {
+    writeFileSync(
+      join(process.cwd(), 'package.json'),
+      JSON.stringify(originalPackageJson, null, 2),
+      { encoding: 'utf-8' }
+    );
+  }
+  function exitHandler() {
+    revertJson();
+    process.exit();
+  }
+  try {
+    if (packageJson && packageJson.fireDependencies) {
+      const linkedDepndencies = packageJson.fireDependencies;
+      const dependencies = Object.keys(linkedDepndencies).map(dep => ({
+        dep,
+        folder: linkedDepndencies[dep]
+      }));
+      async function modifyJson() {
+        await Promise.all(
+          dependencies.map(async ({ dep }) => {
+            packageJson.dependencies[dep] = `file:./${linkedPackagesName}/${
+              dep.split('/')[1]
+            }`;
+          })
+        );
+        await promisify(writeFile)(
+          './package.json',
+          JSON.stringify(packageJson, null, 2),
+          { encoding: 'utf-8' }
+        );
+      }
+
       await Promise.all(
-        dependencies.map(async ({ dep }) => {
-          packageJson.dependencies[dep] = `file:./${linkedPackagesName}/${
-            dep.split('/')[1]
-          }`;
+        dependencies.map(async ({ folder }) => {
+          const args = [
+            '-r',
+            '--exclude',
+            'node_modules',
+            '--exclude',
+            'dist',
+            '--exclude',
+            '.cache',
+            folder,
+            `./${linkedPackagesName}`
+          ];
+          await Worker({
+            command: 'rsync',
+            args
+          });
         })
       );
-      await promisify(writeFile)(
-        './package.json',
-        JSON.stringify(packageJson, null, 2),
-        { encoding: 'utf-8' }
-      );
-    }
 
-    await Promise.all(
-      dependencies.map(async ({ folder }) => {
-        const args = [
-          '-r',
-          '--exclude',
-          'node_modules',
-          '--exclude',
-          'dist',
-          '--exclude',
-          '.cache',
-          folder,
-          `./${linkedPackagesName}`
-        ];
-        await Worker({
-          command: 'rsync',
-          args
-        });
-      })
-    );
-
-    function revertJson() {
-      writeFileSync(
-        join(process.cwd(), 'package.json'),
-        JSON.stringify(originalPackageJson, null, 2),
-        { encoding: 'utf-8' }
-      );
-    }
-    function exitHandler() {
-      revertJson();
-      process.exit();
-    }
-    try {
       try {
         if (includes('--buildCommand')) {
           await Promise.all(
@@ -98,9 +99,14 @@ export async function createFirebasePackageSymlink() {
         command: 'npx',
         args: ['firebase', ...process.argv.slice(2)]
       });
-    } catch (e) {
-      console.log(e);
+    } else {
+      await Worker({
+        command: 'npx',
+        args: ['firebase', ...process.argv.slice(2)]
+      });
     }
-    exitHandler()
+  } catch (e) {
+    console.log(e);
   }
+  exitHandler();
 }
