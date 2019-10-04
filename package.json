@@ -1,6 +1,6 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "bin": {
     "firelink": "./dist/main.js"
   },
@@ -8,6 +8,9 @@
     "build": "parcel build ./src/main.ts --experimental-scope-hoisting --target node",
     "patch": "npm version patch && npm publish --update-readme --access public"
   },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@rxdi/parcel-plugin-shebang": "0.7.5",
     "typescript": "3.6.3",
