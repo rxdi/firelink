@@ -1,0 +1,31 @@
+import { spawn } from 'child_process';
+type WorkerOptions = {
+  command: string;
+  args?: string[];
+  cwd?: string;
+};
+export const Worker = (
+  { command, args, cwd }: WorkerOptions = {
+    command: 'npx',
+
+    args: []
+  },
+  log: boolean = true
+) => {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, { cwd });
+
+    if (log) {
+      child.stderr.pipe(process.stderr);
+    }
+    if (log) {
+      child.stdout.pipe(process.stdout);
+    }
+    child.on('close', (code: number) => {
+      if (code !== 0) {
+        return reject(!!code);
+      }
+      return resolve(!!code);
+    });
+  });
+};
