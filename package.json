@@ -1,6 +1,6 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "bin": {
     "firelink": "./dist/main.js"
   },
@@ -9,7 +9,7 @@
     "patch": "npm version patch && npm publish --update-readme --access public"
   },
   "files": [
-    "dist"
+    "dist/*"
   ],
   "devDependencies": {
     "@rxdi/parcel-plugin-shebang": "0.7.5",
