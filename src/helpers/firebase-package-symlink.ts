@@ -100,7 +100,7 @@ export async function createFirebasePackageSymlink() {
       });
     } catch (e) {
       console.log(e);
-      exitHandler();
     }
+    exitHandler()
   }
 }
