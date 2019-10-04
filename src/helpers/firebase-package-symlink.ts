@@ -95,16 +95,11 @@ export async function createFirebasePackageSymlink() {
       process.on('SIGUSR2', exitHandler);
       process.on('uncaughtException', exitHandler);
       await modifyJson();
-      await Worker({
-        command: 'npx',
-        args: ['firebase', ...process.argv.slice(2)]
-      });
-    } else {
-      await Worker({
-        command: 'npx',
-        args: ['firebase', ...process.argv.slice(2)]
-      });
     }
+    await Worker({
+      command: 'npx',
+      args: ['firebase', ...process.argv.slice(2)]
+    });
   } catch (e) {
     console.log(e);
   }
