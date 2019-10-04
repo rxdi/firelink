@@ -3,19 +3,21 @@ import { readdir, readFile, writeFile, writeFileSync } from 'fs';
 import { promisify } from 'util';
 import { join } from 'path';
 import { includes, nextOrDefault } from './args-extractors';
-const linkedPackagesName = 'linkedPackages';
+
+const linkedPackagesName = '.packages';
+
 export async function createFirebasePackageSymlink() {
   const packageJson: {
     dependencies: { [key: string]: string };
-    linkedDependencies: { [key: string]: string };
+    fireDependencies: { [key: string]: string };
   } = JSON.parse(
     await promisify(readFile)(join(process.cwd(), 'package.json'), {
       encoding: 'utf-8'
     })
   );
   const originalPackageJson = JSON.parse(JSON.stringify(packageJson));
-  if (packageJson && packageJson.linkedDependencies) {
-    const linkedDepndencies = packageJson.linkedDependencies;
+  if (packageJson && packageJson.fireDependencies) {
+    const linkedDepndencies = packageJson.fireDependencies;
     const dependencies = Object.keys(linkedDepndencies).map(dep => ({
       dep,
       folder: linkedDepndencies[dep]
@@ -34,7 +36,7 @@ export async function createFirebasePackageSymlink() {
         { encoding: 'utf-8' }
       );
     }
-    await modifyJson();
+
     await Promise.all(
       dependencies.map(async ({ folder }) => {
         const args = [
@@ -91,6 +93,7 @@ export async function createFirebasePackageSymlink() {
       process.on('SIGUSR1', exitHandler);
       process.on('SIGUSR2', exitHandler);
       process.on('uncaughtException', exitHandler);
+      await modifyJson();
       await Worker({
         command: 'npx',
         args: ['firebase', ...process.argv.slice(2)]

@@ -8,7 +8,7 @@ Sync packages when deploying `monorepos` with firebase using `yarn` or `bolt` wo
 
 > This repository is a complete replacement for `firebase` function.
 
-> The only purpose is to `copy` mapped modules inside `package.json` before working with `firebase` CLI. This way when deploying application `npm` will install packages locally `file:./linkedPackages/database` instead from global registry.
+> The only purpose is to `copy` mapped modules inside `package.json` before working with `firebase` CLI. This way when deploying application `npm` will install packages locally `file:./.packages/database` instead from global registry.
 
 ## Features
 
@@ -25,11 +25,11 @@ npm i -g @rxdi/firelink
 
 ## Usage
 
-#### Add `linkedDependencies` inside `package.json`
+#### Add `fireDependencies` inside `package.json`
 
 ```json
 {
-  "linkedDependencies": {
+  "fireDependencies": {
     "@graphql/database": "../../packages/database",
     "@graphql/shared": "../../packages/shared",
     "@graphql/introspection": "../../packages/introspection"
@@ -66,9 +66,9 @@ After
 ```json
 {
   "dependencies": {
-    "@graphql/database": "file:./linkedPackages/database",
-    "@graphql/shared": "file:./linkedPackages/shared",
-    "@graphql/introspection": "file:./linkedPackages/introspection",
+    "@graphql/database": "file:./.packages/database",
+    "@graphql/shared": "file:./.packages/shared",
+    "@graphql/introspection": "file:./.packages/introspection",
   }
 }
 ```
