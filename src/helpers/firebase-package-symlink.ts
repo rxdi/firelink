@@ -79,7 +79,7 @@ export async function createFirebasePackageSymlink() {
               await Worker(
                 {
                   command: 'npx',
-                  args: [nextOrDefault('--buildCommand', 'tsc')],
+                  args: (nextOrDefault('--buildCommand', 'tsc') as string).split(' '),
                   cwd: join(process.cwd(), linkedPackagesName, dir)
                 },
                 false
