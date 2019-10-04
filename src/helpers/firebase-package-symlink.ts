@@ -43,11 +43,13 @@ export async function createFirebasePackageSymlink() {
             }`;
           })
         );
-        await promisify(writeFile)(
-          './package.json',
-          JSON.stringify(packageJson, null, 2),
-          { encoding: 'utf-8' }
-        );
+        if(!nextOrDefault('--leave-changes', null)) {
+          await promisify(writeFile)(
+            './package.json',
+            JSON.stringify(packageJson, null, 2),
+            { encoding: 'utf-8' }
+          );
+        }
       }
 
       await Promise.all(
