@@ -25,7 +25,9 @@ export async function createFirebasePackageSymlink() {
     );
   }
   function exitHandler() {
-    revertJson();
+    if (!nextOrDefault('--leave-changes', null)) {
+      revertJson();
+    }
     process.exit();
   }
   try {
@@ -43,13 +45,11 @@ export async function createFirebasePackageSymlink() {
             }`;
           })
         );
-        if (!nextOrDefault('--leave-changes', null)) {
-          await promisify(writeFile)(
-            './package.json',
-            JSON.stringify(packageJson, null, 2),
-            { encoding: 'utf-8' }
-          );
-        }
+        await promisify(writeFile)(
+          './package.json',
+          JSON.stringify(packageJson, null, 2),
+          { encoding: 'utf-8' }
+        );
       }
 
       await Promise.all(
