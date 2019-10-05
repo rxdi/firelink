@@ -43,7 +43,7 @@ export async function createFirebasePackageSymlink() {
             }`;
           })
         );
-        if(!nextOrDefault('--leave-changes', null)) {
+        if (!nextOrDefault('--leave-changes', null)) {
           await promisify(writeFile)(
             './package.json',
             JSON.stringify(packageJson, null, 2),
@@ -81,7 +81,10 @@ export async function createFirebasePackageSymlink() {
               await Worker(
                 {
                   command: 'npx',
-                  args: (nextOrDefault('--buildCommand', 'tsc') as string).split(' '),
+                  args: (nextOrDefault(
+                    '--buildCommand',
+                    'tsc'
+                  ) as string).split(' '),
                   cwd: join(process.cwd(), linkedPackagesName, dir)
                 },
                 false
@@ -98,6 +101,7 @@ export async function createFirebasePackageSymlink() {
       process.on('uncaughtException', exitHandler);
       await modifyJson();
     }
+    process.argv = process.argv.filter(a => a !== '--leave-changes');
     await Worker({
       command: 'npx',
       args: ['firebase', ...process.argv.slice(2)]
