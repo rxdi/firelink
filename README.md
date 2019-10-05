@@ -46,6 +46,24 @@ firelink deploy
 The same as `firebase deploy` the only differance is that it will COPY monorepos replace package.json > dependencies with appropriate local file structure and then will revert changes after `firebase` script exit
 
 
+#### Leave changes to package.json after command execution exited
+
+```bash
+firelink --leave-changes
+```
+
+This command will create `package.temp.json` which is `original` configuration before modifications
+
+#### Revert changes
+
+```bash
+firelink --revert-changes
+```
+
+Reverts changes from `package.temp.json` to original `package.json` and deleting `package.temp.json`
+
+If command `firelink --leave-changes` is executed multiple times `package.temp.json` will remain the same as the first time command `firelink --leave-changes` is executed.
+
 
 Example compiled `json`
 
@@ -69,6 +87,21 @@ After
     "@graphql/database": "file:./.packages/database",
     "@graphql/shared": "file:./.packages/shared",
     "@graphql/introspection": "file:./.packages/introspection",
+  }
+}
+```
+
+
+# Configuration
+
+`package.json`
+
+Default runner is command `firebase` but you can change it for example to `gcloud` or `serverless`
+
+```json
+{
+  "fireConfig": {
+    "runner": "firebase"
   }
 }
 ```

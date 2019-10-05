@@ -1,6 +1,6 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "bin": {
     "firelink": "./dist/main.js"
   },
@@ -11,6 +11,9 @@
   "files": [
     "dist/*"
   ],
+  "fireConfig": {
+    "runner": "firebase"
+  },
   "devDependencies": {
     "@rxdi/parcel-plugin-shebang": "0.7.5",
     "typescript": "3.6.3",

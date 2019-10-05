@@ -1,6 +1,8 @@
-export const includes = (i: '--buildCommand' | '--leave-changes') => process.argv.toString().includes(i);
+type Tasks = '--revert-changes' | '--buildCommand' | '--leave-changes';
+
+export const includes = (i: Tasks) => process.argv.toString().includes(i);
 export const nextOrDefault = (
-  i: '--buildCommand' | '--leave-changes',
+  i: Tasks,
   fb: any = true,
   type = (p: string) => p
 ) => {
