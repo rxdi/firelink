@@ -45,7 +45,6 @@ firelink deploy
 
 The same as `firebase deploy` the only differance is that it will COPY monorepos replace package.json > dependencies with appropriate local file structure and then will revert changes after `firebase` script exit
 
-
 #### Leave changes to package.json after command execution exited
 
 ```bash
@@ -64,8 +63,7 @@ Reverts changes from `package.temp.json` to original `package.json` and deleting
 
 If command `firelink --leave-changes` is executed multiple times `package.temp.json` will remain the same as the first time command `firelink --leave-changes` is executed.
 
-
-Example compiled `json`
+Example:
 
 Before
 
@@ -74,7 +72,7 @@ Before
   "dependencies": {
     "@graphql/database": "^1.0.0",
     "@graphql/shared": "^1.0.0",
-    "@graphql/introspection": "^1.0.0",
+    "@graphql/introspection": "^1.0.0"
   }
 }
 ```
@@ -86,17 +84,14 @@ After
   "dependencies": {
     "@graphql/database": "file:./.packages/database",
     "@graphql/shared": "file:./.packages/shared",
-    "@graphql/introspection": "file:./.packages/introspection",
+    "@graphql/introspection": "file:./.packages/introspection"
   }
 }
 ```
 
-
 # Configuration
 
-`package.json`
-
-Default runner is command `firebase` but you can change it for example to `gcloud` or `serverless`
+Default runner is command `firebase` but you can change it for example to `gcloud` or `serverless` by defining `fireConfig` inside `package.json`
 
 ```json
 {
@@ -104,4 +99,22 @@ Default runner is command `firebase` but you can change it for example to `gclou
     "runner": "firebase"
   }
 }
+```
+
+
+You can put even `dir` command
+
+
+```json
+{
+  "fireConfig": {
+    "runner": "dir"
+  }
+}
+```
+
+When executing `firelink` you will be referenced to `dir` function so you will get list of folders inside current directory.
+
+```bash
+dist  node_modules  package.json  README.md  src  tsconfig.json  yarn.lock
 ```

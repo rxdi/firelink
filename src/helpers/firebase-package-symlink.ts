@@ -142,7 +142,7 @@ export async function createFirebasePackageSymlink() {
         runner,
         ...process.argv
           .slice(2)
-          .filter(a => a !== '--leave-changes' && a !== '--revert-changes')
+          .filter(a => a !== '--leave-changes' && a !== '--revert-changes' && a !== '--buildCommand')
       ]
     });
   } catch (e) {
