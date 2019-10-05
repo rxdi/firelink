@@ -101,10 +101,9 @@ export async function createFirebasePackageSymlink() {
       process.on('uncaughtException', exitHandler);
       await modifyJson();
     }
-    process.argv = process.argv.filter(a => a !== '--leave-changes');
     await Worker({
       command: 'npx',
-      args: ['firebase', ...process.argv.slice(2)]
+      args: ['firebase', ...process.argv.slice(2).filter(a => a !== '--leave-changes')]
     });
   } catch (e) {
     console.log(e);
