@@ -1,9 +1,6 @@
 import { spawn } from 'child_process';
-type WorkerOptions = {
-  command: string;
-  args?: string[];
-  cwd?: string;
-};
+import { WorkerOptions } from '../injection-tokens';
+
 export const Worker = (
   { command, args, cwd }: WorkerOptions = {
     command: 'npx',

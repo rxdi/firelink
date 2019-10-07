@@ -1,6 +1,10 @@
-import { createFirebasePackageSymlink } from './helpers/firebase-package-symlink';
+import { createVirtualSymlink } from './helpers/firebase-package-symlink';
 async function Main() {
-  await createFirebasePackageSymlink();
+  try {
+    await createVirtualSymlink();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 Main();
