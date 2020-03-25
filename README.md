@@ -37,6 +37,8 @@ npm i -g @rxdi/firelink
 }
 ```
 
+The tool assumes `@group/package-name` naming convention
+
 #### Usage
 
 ```bash
