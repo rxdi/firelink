@@ -14,7 +14,7 @@ export async function createVirtualSymlink() {
   const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
 
   if (includes(Tasks.REVERT)) {
-    return await revertJson();
+    return await revertJson(WorkingFiles.PACKAGE_JSON, WorkingFiles.PACKAGE_TEMP_JSON);
   }
 
   const originalPackageJson = JSON.parse(JSON.stringify(packageJson));
