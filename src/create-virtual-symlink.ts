@@ -6,7 +6,13 @@ import { modifyJson } from './helpers/modify-json';
 import { readJson } from './helpers/read-json';
 import { revertJson } from './helpers/revert-json';
 import { Worker } from './helpers/worker';
-import { DEFAULT_RUNNER, FireLinkConfig, PackageJson, Tasks, WorkingFiles } from './injection-tokens';
+import {
+  DEFAULT_RUNNER,
+  FireLinkConfig,
+  PackageJson,
+  Tasks,
+  WorkingFiles,
+} from './injection-tokens';
 
 export async function createVirtualSymlink() {
   const packageJson: PackageJson = await readJson(WorkingFiles.PACKAGE_JSON);
@@ -14,7 +20,10 @@ export async function createVirtualSymlink() {
   const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
 
   if (includes(Tasks.REVERT)) {
-    return await revertJson(WorkingFiles.PACKAGE_JSON, WorkingFiles.PACKAGE_TEMP_JSON);
+    return await revertJson(
+      WorkingFiles.PACKAGE_JSON,
+      WorkingFiles.PACKAGE_TEMP_JSON,
+    );
   }
 
   const originalPackageJson = JSON.parse(JSON.stringify(packageJson));
@@ -43,7 +52,14 @@ export async function createVirtualSymlink() {
     command: 'npx',
     args: [
       runner,
-      ...process.argv.slice(2).filter(a => a !== Tasks.LEAVE_CHANGES && a !== Tasks.REVERT && a !== Tasks.BUILD),
+      ...process.argv
+        .slice(2)
+        .filter(
+          a =>
+            a !== Tasks.LEAVE_CHANGES &&
+            a !== Tasks.REVERT &&
+            a !== Tasks.BUILD,
+        ),
     ],
   });
   exitHandler(originalPackageJson);

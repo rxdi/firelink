@@ -8,15 +8,17 @@ import { Worker } from './worker';
 
 export async function buildPackages() {
   return await Promise.all(
-    (await promisify(readdir)(join(process.cwd(), linkedPackagesName))).map(async dir => {
-      await Worker(
-        {
-          command: 'npx',
-          args: (nextOrDefault(Tasks.BUILD, 'tsc') as string).split(' '),
-          cwd: join(process.cwd(), linkedPackagesName, dir),
-        },
-        false,
-      );
-    }),
+    (await promisify(readdir)(join(process.cwd(), linkedPackagesName))).map(
+      async dir => {
+        await Worker(
+          {
+            command: 'npx',
+            args: (nextOrDefault(Tasks.BUILD, 'tsc') as string).split(' '),
+            cwd: join(process.cwd(), linkedPackagesName, dir),
+          },
+          false,
+        );
+      },
+    ),
   );
 }
