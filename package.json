@@ -1,12 +1,11 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.7.43",
+  "version": "0.7.45",
   "bin": {
     "firelink": "./dist/main.js"
   },
   "scripts": {
     "build": "parcel build ./src/main.ts --experimental-scope-hoisting --target node",
-    "patch": "npm version patch && npm publish --update-readme --access public",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
     "lint-fix": "npx eslint . --fix --ext .ts"
