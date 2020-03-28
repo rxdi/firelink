@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "parcel build ./src/main.ts --experimental-scope-hoisting --target node",
-    "patch": "npm version patch && npm publish --update-readme --access public",
+    "patch": "npm run build && npm version patch && npm publish --update-readme --access public",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
     "lint-fix": "npx eslint . --fix --ext .ts"
