@@ -1,6 +1,6 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.7.45",
+  "version": "0.7.46",
   "bin": {
     "firelink": "./dist/main.js"
   },
