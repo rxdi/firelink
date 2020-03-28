@@ -43,7 +43,7 @@ npm i -g @rxdi/firelink
 firelink deploy
 ```
 
-The same as `firebase deploy` the only differance is that it will COPY monorepos replace package.json > dependencies with appropriate local file structure and then will revert changes after `firebase` script exit
+The same as `firebase deploy` the only difference is that it will COPY monorepos replace package.json > dependencies with appropriate local file structure and then will revert changes after `firebase` script exit
 
 #### Leave changes to package.json after command execution exited
 
@@ -101,9 +101,7 @@ Default runner is command `firebase` but you can change it for example to `gclou
 }
 ```
 
-
 You can put even `dir` command
-
 
 ```json
 {
