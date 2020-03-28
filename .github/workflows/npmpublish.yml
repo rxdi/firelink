@@ -20,14 +20,15 @@ jobs:
       - run: npm test --if-present
       - run: git config --global user.email 'kristiqn.tachev@gmail.com'
       - run: git config --global user.name "Kristiyan Tachev"
-      - run: npm version patch
       - run: npm config set '//registry.npmjs.org/:_authToken' "${{secrets.NPM_TOKEN}}"
       - run: npm run build
       - run: git add .
       - run: git commit --amend --no-edit
-      - run: npm run patch
+      - run: npm version patch
+      - run: npm publish --update-readme --access public
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
       - uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          force-push: 'true'
