@@ -1,34 +1,41 @@
-import { Worker } from './worker';
-import { includes } from './args-extractors';
+import { includes } from './helpers/args-extractors';
+import { buildPackages } from './helpers/build-packages';
+import { copyPackages } from './helpers/copy-packages';
+import { exitHandler } from './helpers/exit-handler';
+import { modifyJson } from './helpers/modify-json';
+import { readJson } from './helpers/read-json';
+import { revertJson } from './helpers/revert-json';
+import { Worker } from './helpers/worker';
 import {
-  PackageJson,
+  DEFAULT_RUNNER,
   FireLinkConfig,
-} from '../injection-tokens';
-import { readJson } from './read-json';
-import { revertJson } from './revert-json';
-import { modifyJson } from './modify-json';
-import { exitHandler } from './exit-handler';
-import { buildPackages } from './build-packages';
-import { copyPackages } from './copy-packages';
+  PackageJson,
+  Tasks,
+  WorkingFiles,
+} from './injection-tokens';
 
 export async function createVirtualSymlink() {
-  const packageJson: PackageJson = await readJson('package.json');
+  const packageJson: PackageJson = await readJson(WorkingFiles.PACKAGE_JSON);
   packageJson.fireConfig = packageJson.fireConfig || ({} as FireLinkConfig);
-  let runner = packageJson.fireConfig.runner || 'firebase';
+  const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
+
+  if (includes(Tasks.REVERT)) {
+    return await revertJson(
+      WorkingFiles.PACKAGE_JSON,
+      WorkingFiles.PACKAGE_TEMP_JSON,
+    );
+  }
 
   const originalPackageJson = JSON.parse(JSON.stringify(packageJson));
 
-  if (includes('--revert-changes')) {
-    return await revertJson();
-  }
   if (packageJson && packageJson.fireDependencies) {
     const linkedDepndencies = packageJson.fireDependencies;
     const dependencies = Object.keys(linkedDepndencies).map(dep => ({
       dep,
-      folder: linkedDepndencies[dep]
+      folder: linkedDepndencies[dep],
     }));
     await copyPackages(dependencies);
-    if (includes('--buildCommand')) {
+    if (includes(Tasks.BUILD)) {
       try {
         await buildPackages();
       } catch (e) {}
@@ -49,11 +56,11 @@ export async function createVirtualSymlink() {
         .slice(2)
         .filter(
           a =>
-            a !== '--leave-changes' &&
-            a !== '--revert-changes' &&
-            a !== '--buildCommand'
-        )
-    ]
+            a !== Tasks.LEAVE_CHANGES &&
+            a !== Tasks.REVERT &&
+            a !== Tasks.BUILD,
+        ),
+    ],
   });
   exitHandler(originalPackageJson);
 }

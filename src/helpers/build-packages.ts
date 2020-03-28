@@ -1,8 +1,9 @@
-import { promisify } from 'util';
-import { join } from 'path';
-import { linkedPackagesName } from '../injection-tokens';
-import { nextOrDefault } from './args-extractors';
 import { readdir } from 'fs';
+import { join } from 'path';
+import { promisify } from 'util';
+
+import { linkedPackagesName, Tasks } from '../injection-tokens';
+import { nextOrDefault } from './args-extractors';
 import { Worker } from './worker';
 
 export async function buildPackages() {
@@ -12,12 +13,12 @@ export async function buildPackages() {
         await Worker(
           {
             command: 'npx',
-            args: (nextOrDefault('--buildCommand', 'tsc') as string).split(' '),
-            cwd: join(process.cwd(), linkedPackagesName, dir)
+            args: (nextOrDefault(Tasks.BUILD, 'tsc') as string).split(' '),
+            cwd: join(process.cwd(), linkedPackagesName, dir),
           },
-          false
+          false,
         );
-      }
-    )
+      },
+    ),
   );
 }
