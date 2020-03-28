@@ -1,13 +1,14 @@
 import { spawn } from 'child_process';
+
 import { WorkerOptions } from '../injection-tokens';
 
 export const Worker = (
   { command, args, cwd }: WorkerOptions = {
     command: 'npx',
 
-    args: []
+    args: [],
   },
-  log: boolean = true
+  log = true,
 ) => {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd });
