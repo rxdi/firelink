@@ -14,7 +14,7 @@ export async function modifyJson(
   await Promise.all(
     dependencies.map(async ({ dep }) => {
       packageJson.dependencies[dep] = `file:./${linkedPackagesName}/${
-        dep.split('/')[1]
+        dep.includes('/') ? dep.split('/')[1] : dep
       }`;
     }),
   );
