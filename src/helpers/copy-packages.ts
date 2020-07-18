@@ -2,7 +2,7 @@ import { linkedPackagesName } from '../injection-tokens';
 import { Worker } from './worker';
 
 export async function copyPackages(
-  dependencies: { folder: string; dep: string }[]
+  dependencies: { folder: string; dep: string }[],
 ) {
   await Promise.all(
     dependencies.map(async ({ folder }) => {
@@ -15,12 +15,12 @@ export async function copyPackages(
         '--exclude',
         '.cache',
         folder,
-        `./${linkedPackagesName}`
+        `./${linkedPackagesName}`,
       ];
       await Worker({
         command: 'rsync',
-        args
+        args,
       });
-    })
+    }),
   );
 }
