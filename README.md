@@ -23,6 +23,8 @@ Sync packages when deploying `monorepos` with firebase using `yarn` or `bolt` wo
 npm i -g @rxdi/firelink
 ```
 
+The tool assumes `@group/package-name` naming convention
+
 ## Usage
 
 #### Add `fireDependencies` inside `package.json`
@@ -101,9 +103,7 @@ Default runner is command `firebase` but you can change it for example to `gclou
 }
 ```
 
-
 You can put even `dir` command
-
 
 ```json
 {
