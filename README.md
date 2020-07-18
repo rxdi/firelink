@@ -15,7 +15,7 @@ Sync packages when deploying `monorepos` with firebase using `yarn` or `bolt` wo
 - No dependencies
 - `firebase` command replacement
 - Created with Typescript
-- 3 KB bundle
+- 7 KB bundle
 
 ## Installation
 

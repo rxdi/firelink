@@ -9,14 +9,11 @@ export const Worker = (
     args: [],
   },
   log = true,
-) => {
+): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, { cwd });
-
     if (log) {
       child.stderr.pipe(process.stderr);
-    }
-    if (log) {
       child.stdout.pipe(process.stdout);
     }
     child.on('close', (code: number) => {
