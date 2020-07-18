@@ -23,6 +23,22 @@ Sync packages when deploying `monorepos` with firebase using `yarn` or `bolt` wo
 npm i -g @rxdi/firelink
 ```
 
+Using `binary`
+
+```bash
+wget https://github.com/rxdi/firelink/raw/master/dist/firelink-linux
+```
+
+Give it permission to execute
+
+```bash
+chmod +x firelink-linux
+```
+
+```bash
+./firelink-linux
+```
+
 The tool assumes `@group/package-name` naming convention
 
 ## Usage
