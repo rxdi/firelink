@@ -1,22 +1,22 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.7.41",
+  "version": "0.7.53",
   "bin": {
     "firelink": "./dist/main.js"
   },
   "scripts": {
-    "build": "parcel build ./src/main.ts --experimental-scope-hoisting --target node",
+    "build": "npx parcel build ./src/main.ts --experimental-scope-hoisting --target node",
     "build-binary": "npx gapi build --single-executable",
-    "patch": "npm version patch && npm publish --update-readme --access public",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
-    "lint-fix": "npx eslint . --fix --ext .ts"
+    "lint-fix": "npx eslint . --fix --ext .ts",
+    "publish-packages": "npm publish --update-readme --access public"
   },
   "files": [
     "dist/*"
   ],
   "fireConfig": {
-    "runner": "firebase"
+    "runner": "dir"
   },
   "husky": {
     "hooks": {

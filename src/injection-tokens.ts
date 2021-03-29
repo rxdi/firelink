@@ -28,3 +28,8 @@ export enum Tasks {
   BUILD = '--buildCommand',
   LEAVE_CHANGES = '--leave-changes',
 }
+
+export interface DependenciesLink {
+  dep: string;
+  folder: string;
+}

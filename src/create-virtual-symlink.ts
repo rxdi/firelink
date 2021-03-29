@@ -28,7 +28,7 @@ export async function createVirtualSymlink() {
 
   const originalPackageJson = JSON.parse(JSON.stringify(packageJson));
 
-  if (packageJson && packageJson.fireDependencies) {
+  if (packageJson.fireDependencies) {
     const linkedDepndencies = packageJson.fireDependencies;
     const dependencies = Object.keys(linkedDepndencies).map(dep => ({
       dep,

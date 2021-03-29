@@ -19,6 +19,8 @@ Sync packages when deploying `monorepos` with firebase using `yarn` or `bolt` wo
 
 ## Installation
 
+Using `npm`
+
 ```bash
 npm i -g @rxdi/firelink
 ```
@@ -37,6 +39,12 @@ chmod +x firelink-linux
 
 ```bash
 ./firelink-linux
+```
+
+Alias
+
+```
+sudo ln -s ./firelink-linux /bin/firelink
 ```
 
 The tool assumes `@group/package-name` naming convention
