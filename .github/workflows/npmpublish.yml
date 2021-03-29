@@ -1,0 +1,35 @@
+name: Publish
+
+on:
+  push:
+    branches:
+      - master
+# on: [push]
+jobs:
+  publish-gpr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+          # registry-url: https://npm.pkg.github.com/
+          # scope: "@rxdi"
+      - run: npm install
+      - run: npm config set '//registry.npmjs.org/:_authToken' "${{secrets.NPM_TOKEN}}"
+      - run: npm run lint --if-present
+      - run: npm test --if-present
+      - run: git config --global user.email 'kristiqn.tachev@gmail.com'
+      - run: git config --global user.name "Kristiyan Tachev"
+      - run: npm version patch
+      - run: npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node
+      - run: npm run publish-packages
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+      - run: npx conventional-changelog-cli -p angular -i CHANGELOG.md -s --commit-path . -r 0
+      - run: git add .
+      - run: git commit --amend --no-edit
+      - uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
