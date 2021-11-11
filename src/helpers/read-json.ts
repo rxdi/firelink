@@ -2,10 +2,12 @@ import { readFile } from 'fs';
 import { join } from 'path';
 import { promisify } from 'util';
 
-export async function readJson(name: string) {
+import { PackageJson } from '../injection-tokens';
+
+export async function readJson(name: string, cwd: string = process.cwd()) {
   return JSON.parse(
-    await promisify(readFile)(join(process.cwd(), name), {
+    await promisify(readFile)(join(cwd, name), {
       encoding: 'utf-8',
     }),
-  );
+  ) as PackageJson;
 }

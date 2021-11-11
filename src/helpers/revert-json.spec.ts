@@ -1,9 +1,10 @@
 import 'jest';
 
-import { exists, readFile, unlink } from 'fs';
+import { readFile, unlink } from 'fs';
 import { promisify } from 'util';
 
 import { PackageJson } from '../injection-tokens';
+import { fileExists } from './file-exists';
 import { revertJson } from './revert-json';
 import { writeFileJson } from './write-file-json';
 
@@ -31,6 +32,6 @@ describe('[RevertJson]: tests', () => {
     );
     expect(modifiedJson.dependencies['@pesho/test']).toBe('0.0.1');
     await promisify(unlink)(testJsonToSave);
-    expect(await promisify(exists)(testJsonToSave)).toBeFalsy();
+    expect(await fileExists(testJsonToSave)).toBeFalsy();
   });
 });

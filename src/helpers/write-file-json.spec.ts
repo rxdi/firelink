@@ -1,8 +1,9 @@
 import 'jest';
 
-import { exists, unlink } from 'fs';
+import { unlink } from 'fs';
 import { promisify } from 'util';
 
+import { fileExists } from './file-exists';
 import { writeFileJson } from './write-file-json';
 
 describe('[WriteFileJson]: tests', () => {
@@ -12,10 +13,10 @@ describe('[WriteFileJson]: tests', () => {
       fireDependencies: {},
       fireConfig: {},
     });
-    let isExists = await promisify(exists)('package-test.json');
+    let isExists = await fileExists('package-test.json');
     expect(isExists).toBeTruthy();
     await promisify(unlink)('package-test.json');
-    isExists = await promisify(exists)('package-test.json');
+    isExists = await fileExists('package-test.json');
     expect(isExists).toBeFalsy();
   });
 });

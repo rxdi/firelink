@@ -3,7 +3,6 @@ import { buildPackages } from './helpers/build-packages';
 import { copyPackages } from './helpers/copy-packages';
 import { exitHandler } from './helpers/exit-handler';
 import { modifyJson } from './helpers/modify-json';
-import { readJson } from './helpers/read-json';
 import { revertJson } from './helpers/revert-json';
 import { Worker } from './helpers/worker';
 import {
@@ -14,8 +13,11 @@ import {
   WorkingFiles,
 } from './injection-tokens';
 
-export async function createVirtualSymlink() {
-  const packageJson: PackageJson = await readJson(WorkingFiles.PACKAGE_JSON);
+export async function createVirtualSymlink(
+  packageJson: PackageJson = {} as PackageJson,
+  outFolder: string,
+  outFolderName: string,
+) {
   packageJson.fireConfig = packageJson.fireConfig || ({} as FireLinkConfig);
   const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
 
@@ -34,10 +36,10 @@ export async function createVirtualSymlink() {
       dep,
       folder: linkedDepndencies[dep],
     }));
-    await copyPackages(dependencies);
+    await copyPackages(dependencies, outFolder, outFolderName);
     if (includes(Tasks.BUILD)) {
       try {
-        await buildPackages();
+        await buildPackages(outFolder, outFolderName);
       } catch (e) {}
     }
     process.stdin.resume();
@@ -46,7 +48,7 @@ export async function createVirtualSymlink() {
     process.on('SIGUSR1', () => exitHandler(originalPackageJson));
     process.on('SIGUSR2', () => exitHandler(originalPackageJson));
     process.on('uncaughtException', () => exitHandler(originalPackageJson));
-    await modifyJson(packageJson, dependencies);
+    await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
   await Worker({
     command: 'npx',
