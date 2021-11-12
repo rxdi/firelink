@@ -3,7 +3,6 @@ import { promisify } from 'util';
 
 import {
   DependenciesLink,
-  linkedPackagesName,
   PackageJson,
   WorkingFiles,
 } from '../injection-tokens';
@@ -11,9 +10,11 @@ import {
 export async function modifyJson(
   packageJson: PackageJson,
   dependencies: DependenciesLink[],
+  outFolder: string,
+  outFolderName: string,
 ) {
   for (const { dep } of dependencies) {
-    packageJson.dependencies[dep] = `file:./${linkedPackagesName}/${
+    packageJson.dependencies[dep] = `file:${outFolder}/${outFolderName}/${
       dep.includes('/') ? dep.split('/')[1] : dep
     }`;
   }

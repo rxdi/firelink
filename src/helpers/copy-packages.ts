@@ -1,23 +1,26 @@
-import { DependenciesLink, linkedPackagesName } from '../injection-tokens';
+import { DependenciesLink } from '../injection-tokens';
 import { Worker } from './worker';
 
-export async function copyPackages(dependencies: DependenciesLink[]) {
+export async function copyPackages(
+  dependencies: DependenciesLink[],
+  outFolder: string,
+  outFolderName: string,
+) {
   await Promise.all(
     dependencies.map(async ({ folder }) => {
-      const args = [
-        '-r',
-        '--exclude',
-        'node_modules',
-        '--exclude',
-        'dist',
-        '--exclude',
-        '.cache',
-        folder,
-        `./${linkedPackagesName}`,
-      ];
       await Worker({
         command: 'rsync',
-        args,
+        args: [
+          '-r',
+          '--exclude',
+          'node_modules',
+          '--exclude',
+          'dist',
+          '--exclude',
+          '.cache',
+          folder,
+          `${outFolder}/${outFolderName}`,
+        ],
       });
     }),
   );

@@ -1,14 +1,21 @@
 export interface FireLinkConfig {
   runner?: string;
+  outFolderLocation?: string;
+  outFolderName?: string;
 }
 
-export interface PackageJson {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface PackageJson extends Record<string, any> {
   dependencies: { [key: string]: string };
   fireConfig?: FireLinkConfig;
   fireDependencies: { [key: string]: string };
 }
 
-export const linkedPackagesName = '.packages';
+export const getPackagesFolderName = (packageJson: PackageJson) =>
+  packageJson?.fireConfig?.outFolderName || '.packages';
+
+export const getOutFolder = (packageJson: PackageJson) =>
+  packageJson?.fireConfig?.outFolderLocation || '.';
 
 export const DEFAULT_RUNNER = 'firebase';
 

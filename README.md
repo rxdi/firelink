@@ -28,7 +28,7 @@ npm i -g @rxdi/firelink
 Using `binary`
 
 ```bash
-wget https://github.com/rxdi/firelink/raw/master/dist/firelink-linux
+wget https://github.com/rxdi/firelink/raw/master/binaries/firelink-linux
 ```
 
 Give it permission to execute
@@ -46,6 +46,10 @@ Alias
 ```
 sudo ln -s ./firelink-linux /bin/firelink
 ```
+
+There are multiple binaries for `mac`, `windows` and `linux`
+There is only one tested in `linux` so keep in mind that for `mac` and `windows` may not work!
+If the binaries don't work in `mac` or `windows` please install it via `npm` globally with `npm i -g @rxdi/firelink`
 
 The tool assumes `@group/package-name` naming convention
 
@@ -122,10 +126,16 @@ Default runner is command `firebase` but you can change it for example to `gclou
 ```json
 {
   "fireConfig": {
-    "runner": "firebase"
+    "runner": "firebase",
+    "outFolderName": ".packages",
+    "outFolderLocation": "."
   }
 }
 ```
+
+By default packages will be saved in `.packages` folder and `current` directory will be used
+U can change that by specifiyng properties `outFolderName` and `outFolderLocation` inside `fireConfig`
+Check `example` folder inside this repository
 
 You can put even `dir` command
 
