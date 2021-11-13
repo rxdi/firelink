@@ -8,6 +8,7 @@ on:
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci-skip]')"
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
