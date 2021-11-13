@@ -1,5 +1,7 @@
+import { join } from 'path';
+
 import { DependenciesLink } from '../injection-tokens';
-import { Worker } from './worker';
+import { FolderSync } from './copy-recursive';
 
 export async function copyPackages(
   dependencies: DependenciesLink[],
@@ -8,20 +10,10 @@ export async function copyPackages(
 ) {
   await Promise.all(
     dependencies.map(async ({ folder }) => {
-      await Worker({
-        command: 'rsync',
-        args: [
-          '-r',
-          '--exclude',
-          'node_modules',
-          '--exclude',
-          'dist',
-          '--exclude',
-          '.cache',
-          folder,
-          `${outFolder}/${outFolderName}`,
-        ],
-      });
+      await FolderSync.copyFolderRecursive(
+        folder,
+        join(outFolder, outFolderName),
+      );
     }),
   );
 }
