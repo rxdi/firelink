@@ -40,3 +40,5 @@ export interface DependenciesLink {
   dep: string;
   folder: string;
 }
+
+export const isWin = process.platform === 'win32';

@@ -8,6 +8,7 @@ import { Worker } from './helpers/worker';
 import {
   DEFAULT_RUNNER,
   FireLinkConfig,
+  isWin,
   PackageJson,
   Tasks,
   WorkingFiles,
@@ -51,8 +52,9 @@ export async function createVirtualSymlink(
     await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
   await Worker({
-    command: 'npx',
+    command: isWin ? 'cmd' : 'npx',
     args: [
+      ...(isWin ? ['/c', 'npx'] : []),
       runner,
       ...process.argv
         .slice(2)
