@@ -128,10 +128,20 @@ Default runner is command `firebase` but you can change it for example to `gclou
   "fireConfig": {
     "runner": "firebase",
     "outFolderName": ".packages",
-    "outFolderLocation": "."
+    "outFolderLocation": ".",
+    "excludes": ["node_modules"]
   }
 }
 ```
+
+`excludes` property can exclude some folders or files from being copied it accepts `Array` from `string`
+
+For example we may want to install dependencies of the packages when deploying using local npm path,
+so we want to not waste time duplicating node modules
+
+Equivalent of excludes inside package.json `.fireignore` can be specified as a file inside a directory where the command `firelink` will be executed. `.fireignore` behaviour is the same as `.gitignore`
+
+If you do not wish to use `.fireignore` file name the name can be specified from `fireConfig.excludesFileName`
 
 By default packages will be saved in `.packages` folder and `current` directory will be used
 U can change that by specifiyng properties `outFolderName` and `outFolderLocation` inside `fireConfig`

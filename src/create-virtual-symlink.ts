@@ -3,6 +3,7 @@ import { buildPackages } from './helpers/build-packages';
 import { copyPackages } from './helpers/copy-packages';
 import { exitHandler } from './helpers/exit-handler';
 import { modifyJson } from './helpers/modify-json';
+import { readExcludes } from './helpers/read-excludes';
 import { revertJson } from './helpers/revert-json';
 import { Worker } from './helpers/worker';
 import {
@@ -21,6 +22,12 @@ export async function createVirtualSymlink(
 ) {
   packageJson.fireConfig = packageJson.fireConfig || ({} as FireLinkConfig);
   const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
+  const excludes = [
+    ...(packageJson.fireConfig.excludes || []),
+    ...(await readExcludes(
+      packageJson.fireConfig.excludesFileName || '.fireignore',
+    )),
+  ];
 
   if (includes(Tasks.REVERT)) {
     return await revertJson(
@@ -37,7 +44,7 @@ export async function createVirtualSymlink(
       dep,
       folder: linkedDepndencies[dep],
     }));
-    await copyPackages(dependencies, outFolder, outFolderName);
+    await copyPackages(dependencies, outFolder, outFolderName, excludes);
     if (includes(Tasks.BUILD)) {
       try {
         await buildPackages(outFolder, outFolderName);

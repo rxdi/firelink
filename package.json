@@ -6,11 +6,13 @@
   },
   "scripts": {
     "build": "npx parcel build ./src/main.ts --experimental-scope-hoisting --target node",
-    "build-binary": "npx gapi build --single-executable",
+    "build-binary": "npx gapi build --single-executable && npm run copy-binaries",
+    "build-all": "npm run build-binary && rm -rf dist && npm run build",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
     "lint-fix": "npx eslint . --fix --ext .ts",
-    "publish-packages": "npm publish --update-readme --access public"
+    "publish-packages": "npm publish --update-readme --access public",
+    "copy-binaries": "cp -r ./dist/firelink-linux ./binaries && cp -r ./dist/firelink-macos ./binaries && cp -r ./dist/firelink-win.exe ./binaries"
   },
   "files": [
     "dist/*"

@@ -1,19 +1,72 @@
 import { join } from 'path';
 
-import { DependenciesLink } from '../injection-tokens';
+import { DependenciesLink, isWin } from '../injection-tokens';
 import { FolderSync } from './copy-recursive';
+import { Worker } from './worker';
 
-export async function copyPackages(
+function copyOther(
+  folder: string,
+  outFolder: string,
+  outFolderName: string,
+  excludes: string[],
+) {
+  return Worker({
+    command: 'rsync',
+    args: [
+      '-r',
+      ...(excludes
+        ? excludes.reduce(
+            (prev, curr) => [...prev, '--exclude', curr],
+            [] as string[],
+          )
+        : []),
+      folder,
+      `${outFolder}/${outFolderName}`,
+    ],
+  });
+}
+
+export function copyPackages(
   dependencies: DependenciesLink[],
   outFolder: string,
   outFolderName: string,
+  excludes: string[],
 ) {
-  await Promise.all(
-    dependencies.map(async ({ folder }) => {
-      await FolderSync.copyFolderRecursive(
-        folder,
-        join(outFolder, outFolderName),
-      );
-    }),
+  return Promise.all(
+    dependencies.map(({ folder }) =>
+      isWin
+        ? FolderSync.copyFolderRecursive(folder, join(outFolder, outFolderName))
+        : copyOther(folder, outFolder, outFolderName, excludes),
+    ),
   );
 }
+
+/* Cannot make it work to behave the same as rsync in windows for now */
+
+// function copyWindows(
+//   folder: string,
+//   outFolder: string,
+//   outFolderName: string,
+//   excludes: string[],
+// ) {
+//   console.log(folder);
+//   console.log([outFolder, outFolderName].join('\\'));
+//   return Worker({
+//     command: 'cmd',
+//     args: [
+//       '/c',
+//       'robocopy',
+//       folder,
+//       [outFolder, outFolderName].join('\\'),
+//       '/s',
+//       '/e',
+//       '*.*',
+//       ...(excludes
+//         ? excludes.reduce(
+//             (prev, curr) => [...prev, '/xd', curr],
+//             [] as string[],
+//           )
+//         : []),
+//     ],
+//   });
+// }
