@@ -2,6 +2,8 @@ export interface FireLinkConfig {
   runner?: string;
   outFolderLocation?: string;
   outFolderName?: string;
+  excludes?: string[];
+  excludesFileName?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
