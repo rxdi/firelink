@@ -6,18 +6,12 @@ import {
   WorkingFiles,
 } from './injection-tokens';
 
-async function Main() {
-  try {
-    const packageJson = await readJson(WorkingFiles.PACKAGE_JSON);
+(async () => {
+  const packageJson = await readJson(WorkingFiles.PACKAGE_JSON);
 
-    await createVirtualSymlink(
-      packageJson,
-      getOutFolder(packageJson),
-      getPackagesFolderName(packageJson),
-    );
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-Main();
+  await createVirtualSymlink(
+    packageJson,
+    getOutFolder(packageJson),
+    getPackagesFolderName(packageJson),
+  );
+})();
