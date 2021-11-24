@@ -1,9 +1,10 @@
-## [0.7.57](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.57) (2021-11-15)
+## [0.7.58](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.58) (2021-11-24)
 
 
 ### Bug Fixes
 
 * **Dependencies:** https://github.com/rxdi/firelink/pull/3 ([017f8ee](https://github.com/rxdi/firelink/commit/017f8ee90d8b7eb26e5150fb963c2870cd4cce49))
+* **main:** when firebase crashes it is wrapped inside try catch causing to silend build fails ([9445747](https://github.com/rxdi/firelink/commit/944574740fbcb534540075b3b12d9bd8d982f9b3))
 * **packages:** on windows native fs introduced since the rsync behaviour differs ([d5b0bb4](https://github.com/rxdi/firelink/commit/d5b0bb491c14dc8bd635ccff5ca52bd63eefc72a))
 * **yarn:** version missmatch and wrong generated yarn.lock removed since we have package.lock.json ([7e0fce9](https://github.com/rxdi/firelink/commit/7e0fce993816629210f9abc1bab4961edc58d415))
 
