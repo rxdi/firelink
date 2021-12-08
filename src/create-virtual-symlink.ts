@@ -5,11 +5,10 @@ import { exitHandler } from './helpers/exit-handler';
 import { modifyJson } from './helpers/modify-json';
 import { readExcludes } from './helpers/read-excludes';
 import { revertJson } from './helpers/revert-json';
-import { Worker } from './helpers/worker';
+import { runCommand } from './helpers/run-command';
 import {
   DEFAULT_RUNNER,
   FireLinkConfig,
-  isWin,
   PackageJson,
   Tasks,
   WorkingFiles,
@@ -58,20 +57,6 @@ export async function createVirtualSymlink(
     process.on('uncaughtException', () => exitHandler(originalPackageJson));
     await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
-  await Worker({
-    command: isWin ? 'cmd' : 'npx',
-    args: [
-      ...(isWin ? ['/c', 'npx'] : []),
-      runner,
-      ...process.argv
-        .slice(2)
-        .filter(
-          a =>
-            a !== Tasks.LEAVE_CHANGES &&
-            a !== Tasks.REVERT &&
-            a !== Tasks.BUILD,
-        ),
-    ],
-  });
+  await runCommand(runner, process.argv);
   exitHandler(originalPackageJson);
 }
