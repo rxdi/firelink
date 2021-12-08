@@ -50,13 +50,20 @@ export async function createVirtualSymlink(
       } catch (e) {}
     }
     process.stdin.resume();
-    process.on('exit', () => exitHandler(originalPackageJson));
-    process.on('SIGINT', () => exitHandler(originalPackageJson));
-    process.on('SIGUSR1', () => exitHandler(originalPackageJson));
-    process.on('SIGUSR2', () => exitHandler(originalPackageJson));
-    process.on('uncaughtException', () => exitHandler(originalPackageJson));
+    process.on('exit', () => exitHandler(originalPackageJson, false));
+    process.on('SIGINT', () => exitHandler(originalPackageJson, false));
+    process.on('SIGUSR1', () => exitHandler(originalPackageJson, false));
+    process.on('SIGUSR2', () => exitHandler(originalPackageJson, false));
+    process.on('uncaughtException', () =>
+      exitHandler(originalPackageJson, false),
+    );
     await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
-  await runCommand(runner, process.argv);
-  exitHandler(originalPackageJson);
+  try {
+    await runCommand(runner, process.argv);
+    exitHandler(originalPackageJson, true);
+  } catch (e) {
+    exitHandler(originalPackageJson, false);
+  }
+  process.stdin.pause();
 }

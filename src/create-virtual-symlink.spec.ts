@@ -47,7 +47,14 @@ describe('createVirtualSymlink', () => {
     mockRunCommand.mockImplementationOnce(() => Promise.resolve(true));
     await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
-    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson);
+    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, true);
+  });
+
+  it('should exit with error if final command fails', async () => {
+    mockRunCommand.mockImplementationOnce(() => Promise.reject(false));
+    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
+    expect(mockRunCommand).toHaveBeenCalledTimes(1);
+    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, false);
   });
 
   it('should only revert json and exit if --revert-changes flag is present', async () => {
@@ -65,7 +72,7 @@ describe('createVirtualSymlink', () => {
     expect(mockCopyPackages).toHaveBeenCalledTimes(1);
     expect(mockModifyJson).toHaveBeenCalledTimes(1);
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
-    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson);
+    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, true);
   });
 
   it('should build fireDependencies if --buildCommand flag is present', async () => {
@@ -76,6 +83,6 @@ describe('createVirtualSymlink', () => {
     expect(mockBuildPackages).toHaveBeenCalledTimes(1);
     expect(mockModifyJson).toHaveBeenCalledTimes(1);
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
-    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson);
+    expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, true);
   });
 });
