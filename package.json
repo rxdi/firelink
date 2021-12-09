@@ -1,6 +1,6 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.7.59",
+  "version": "0.7.60",
   "bin": {
     "firelink": "./dist/main.js"
   },
@@ -24,8 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run changelog && npm run ammend-changelog",
-      "pre-commit": "npm run lint && npm run test"
+      "pre-commit": "npm run lint && npm run test && npm run changelog && git add CHANGELOG.md"
     }
   },
   "devDependencies": {

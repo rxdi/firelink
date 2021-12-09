@@ -1,3 +1,12 @@
+## [0.7.60](https://github.com/rxdi/firelink/compare/v0.7.59...v0.7.60) (2021-12-09)
+
+
+### Bug Fixes
+
+* **exitHandler:** added await inside create-virtual-symlink ([0b83f78](https://github.com/rxdi/firelink/commit/0b83f78f68ef1da8dd66f2a85a35298383271566))
+
+
+
 ## [0.7.59](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.59) (2021-12-09)
 
 
