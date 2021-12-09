@@ -5,11 +5,10 @@ import { exitHandler } from './helpers/exit-handler';
 import { modifyJson } from './helpers/modify-json';
 import { readExcludes } from './helpers/read-excludes';
 import { revertJson } from './helpers/revert-json';
-import { Worker } from './helpers/worker';
+import { runCommand } from './helpers/run-command';
 import {
   DEFAULT_RUNNER,
   FireLinkConfig,
-  isWin,
   PackageJson,
   Tasks,
   WorkingFiles,
@@ -51,27 +50,20 @@ export async function createVirtualSymlink(
       } catch (e) {}
     }
     process.stdin.resume();
-    process.on('exit', () => exitHandler(originalPackageJson));
-    process.on('SIGINT', () => exitHandler(originalPackageJson));
-    process.on('SIGUSR1', () => exitHandler(originalPackageJson));
-    process.on('SIGUSR2', () => exitHandler(originalPackageJson));
-    process.on('uncaughtException', () => exitHandler(originalPackageJson));
+    process.on('exit', () => exitHandler(originalPackageJson, false));
+    process.on('SIGINT', () => exitHandler(originalPackageJson, false));
+    process.on('SIGUSR1', () => exitHandler(originalPackageJson, false));
+    process.on('SIGUSR2', () => exitHandler(originalPackageJson, false));
+    process.on('uncaughtException', () =>
+      exitHandler(originalPackageJson, false),
+    );
     await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
-  await Worker({
-    command: isWin ? 'cmd' : 'npx',
-    args: [
-      ...(isWin ? ['/c', 'npx'] : []),
-      runner,
-      ...process.argv
-        .slice(2)
-        .filter(
-          a =>
-            a !== Tasks.LEAVE_CHANGES &&
-            a !== Tasks.REVERT &&
-            a !== Tasks.BUILD,
-        ),
-    ],
-  });
-  exitHandler(originalPackageJson);
+  try {
+    await runCommand(runner, process.argv);
+    exitHandler(originalPackageJson, true);
+  } catch (e) {
+    exitHandler(originalPackageJson, false);
+  }
+  process.stdin.pause();
 }

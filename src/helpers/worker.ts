@@ -18,9 +18,9 @@ export const Worker = (
     }
     child.on('close', (code: number) => {
       if (code !== 0) {
-        return reject(!!code);
+        return reject(!code);
       }
-      return resolve(!!code);
+      return resolve(!code);
     });
   });
 };
