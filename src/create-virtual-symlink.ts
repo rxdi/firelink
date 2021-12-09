@@ -61,9 +61,9 @@ export async function createVirtualSymlink(
   }
   try {
     await runCommand(runner, process.argv);
-    exitHandler(originalPackageJson, true);
+    await exitHandler(originalPackageJson, true);
   } catch (e) {
-    exitHandler(originalPackageJson, false);
+    await exitHandler(originalPackageJson, false);
   }
   process.stdin.pause();
 }

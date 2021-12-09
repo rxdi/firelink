@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-# on: [push]
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
@@ -14,8 +13,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-          # registry-url: https://npm.pkg.github.com/
-          # scope: "@rxdi"
       - run: npm install
       - run: npm config set '//registry.npmjs.org/:_authToken' "${{secrets.NPM_TOKEN}}"
       - run: npm run lint --if-present
@@ -27,9 +24,6 @@ jobs:
       - run: npm run publish-packages
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: npx conventional-changelog-cli -p angular -i CHANGELOG.md -s --commit-path . -r 0
-      - run: git add .
-      - run: git commit --amend --no-edit
       - uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

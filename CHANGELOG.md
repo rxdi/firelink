@@ -1,4 +1,4 @@
-## [0.7.58](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.58) (2021-11-24)
+## [0.7.59](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.59) (2021-12-09)
 
 
 ### Bug Fixes
