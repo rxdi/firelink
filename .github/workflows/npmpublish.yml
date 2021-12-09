@@ -20,7 +20,7 @@ jobs:
       - run: git config --global user.email 'kristiqn.tachev@gmail.com'
       - run: git config --global user.name "Kristiyan Tachev"
       - run: npm version patch
-      - run: npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node
+      - run: npm run build
       - run: npm run publish-packages
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}

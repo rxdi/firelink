@@ -1,11 +1,11 @@
 {
   "name": "@rxdi/firelink",
-  "version": "0.7.60",
+  "version": "0.7.61",
   "bin": {
     "firelink": "./dist/main.js"
   },
   "scripts": {
-    "build": "npx parcel build ./src/main.ts --experimental-scope-hoisting --target node",
+    "build": "npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node",
     "build-binary": "npx gapi build --single-executable && npm run copy-binaries",
     "build-all": "npm run build-binary && rm -rf dist && npm run build",
     "test": "npx jest",
