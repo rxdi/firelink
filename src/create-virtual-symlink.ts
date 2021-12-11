@@ -20,6 +20,7 @@ export async function createVirtualSymlink(
   outFolderName: string,
 ) {
   packageJson.fireConfig = packageJson.fireConfig || ({} as FireLinkConfig);
+  let successStatus = false;
   const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
   const excludes = [
     ...(packageJson.fireConfig.excludes || []),
@@ -50,20 +51,25 @@ export async function createVirtualSymlink(
       } catch (e) {}
     }
     process.stdin.resume();
-    process.on('exit', () => exitHandler(originalPackageJson, false));
-    process.on('SIGINT', () => exitHandler(originalPackageJson, false));
-    process.on('SIGUSR1', () => exitHandler(originalPackageJson, false));
-    process.on('SIGUSR2', () => exitHandler(originalPackageJson, false));
+    process.on('exit', () => exitHandler(originalPackageJson, successStatus));
+    process.on('SIGINT', () => exitHandler(originalPackageJson, successStatus));
+    process.on('SIGUSR1', () =>
+      exitHandler(originalPackageJson, successStatus),
+    );
+    process.on('SIGUSR2', () =>
+      exitHandler(originalPackageJson, successStatus),
+    );
     process.on('uncaughtException', () =>
-      exitHandler(originalPackageJson, false),
+      exitHandler(originalPackageJson, successStatus),
     );
     await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
   try {
     await runCommand(runner, process.argv);
-    await exitHandler(originalPackageJson, true);
+    successStatus = true;
   } catch (e) {
-    await exitHandler(originalPackageJson, false);
+  } finally {
+    await exitHandler(originalPackageJson, successStatus);
   }
   process.stdin.pause();
 }
