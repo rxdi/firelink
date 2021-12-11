@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node",
-    "build-binary": "npx gapi build --single-executable && npm run copy-binaries",
+    "build-binary": "npx gapi build --single-executable && mkdir binaries && npm run copy-binaries",
     "build-all": "npm run build-binary && rm -rf dist && npm run build",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
