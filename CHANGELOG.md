@@ -1,3 +1,12 @@
+## [0.7.64](https://github.com/rxdi/firelink/compare/v0.7.63...v0.7.64) (2021-12-11)
+
+
+### Features
+
+* **binaries:** release for binaries version 2 ([ded727e](https://github.com/rxdi/firelink/commit/ded727e64374113efac033eeb0e5b6b55b6205e6))
+
+
+
 ## [0.7.63](https://github.com/rxdi/firelink/compare/v0.7.62...v0.7.63) (2021-12-11)
 
 
