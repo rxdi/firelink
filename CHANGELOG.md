@@ -1,9 +1,17 @@
-## [0.7.68](https://github.com/rxdi/firelink/compare/v0.7.66...v0.7.68) (2021-12-11)
+## [0.7.69](https://github.com/rxdi/firelink/compare/v0.7.68...v0.7.69) (2021-12-11)
+
+
+
+## [0.7.68](https://github.com/rxdi/firelink/compare/v0.7.67...v0.7.68) (2021-12-11)
 
 
 ### Bug Fixes
 
 * **binaries:** release for binaries using github action ([1afda49](https://github.com/rxdi/firelink/commit/1afda49d893bd1ad14ade61bdfa87cd984257933))
+
+
+
+## [0.7.67](https://github.com/rxdi/firelink/compare/v0.7.66...v0.7.67) (2021-12-11)
 
 
 
