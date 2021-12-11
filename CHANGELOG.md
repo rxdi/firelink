@@ -1,3 +1,17 @@
+## [0.7.71](https://github.com/rxdi/firelink/compare/v0.7.70...v0.7.71) (2021-12-11)
+
+
+### Bug Fixes
+
+* **README:** changed link to lead to latest binary ([26c152c](https://github.com/rxdi/firelink/commit/26c152c97fb85d104f9edeef39999a999c6bc4fe))
+
+
+### Features
+
+* **release:** release process is only triggered when tag is created ([2529635](https://github.com/rxdi/firelink/commit/25296357961d6c3d087035f394d111896057eaf4))
+
+
+
 ## [0.7.70](https://github.com/rxdi/firelink/compare/v0.7.69...v0.7.70) (2021-12-11)
 
 
