@@ -1,3 +1,12 @@
+## [0.7.74](https://github.com/rxdi/firelink/compare/v0.7.73...v0.7.74) (2021-12-11)
+
+
+### Features
+
+* **index:** added barrel export using index.ts for further more extension of the library ([60907ea](https://github.com/rxdi/firelink/commit/60907ea3385a5399d1704373a10fb25e299c7a89))
+
+
+
 ## [0.7.73](https://github.com/rxdi/firelink/compare/v0.7.72...v0.7.73) (2021-12-11)
 
 
