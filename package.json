@@ -4,6 +4,7 @@
   "bin": {
     "firelink": "./dist/main.js"
   },
+  "main": "./dist/index.js",
   "scripts": {
     "build": "npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node",
     "build-binary": "npx gapi build --single-executable && mkdir binaries && npm run copy-binaries",
