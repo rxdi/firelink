@@ -3,7 +3,7 @@ name: Release binaries
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - '*'
 
 jobs:
   build:
@@ -21,9 +21,25 @@ jobs:
         run: npm i -g @gapi/cli @zeit/ncc@0.22.1 pkg@4.4.7
       - name: Build
         run: npm run build-binary
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Read package.json Version
+        uses: tyankatsu0105/read-package-version-actions@v1
+        id: version
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
         with:
-          files: |
-            binaries/**
-            LICENSE
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Upload Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./binaries/firelink-linux
+          asset_name: firelink-linux
