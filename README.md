@@ -28,7 +28,7 @@ npm i -g @rxdi/firelink
 Using `binary`
 
 ```bash
-wget https://github.com/rxdi/firelink/raw/master/binaries/firelink-linux
+wget https://github.com/rxdi/firelink/releases/download/v0.7.69/firelink-linux
 ```
 
 Give it permission to execute

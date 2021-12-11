@@ -11,7 +11,7 @@
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
     "lint-fix": "npx eslint . --fix --ext .ts",
-    "publish-packages": "npm publish --update-readme --access public",
+    "publish-package": "npm publish --update-readme --access public",
     "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . -r 0",
     "ammend-changelog": "git commit --amend --no-edit",
     "copy-binaries": "cp -r ./dist/firelink-linux ./binaries && cp -r ./dist/firelink-macos ./binaries && cp -r ./dist/firelink-win.exe ./binaries"

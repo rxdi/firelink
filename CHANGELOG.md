@@ -1,3 +1,7 @@
+## [0.7.70](https://github.com/rxdi/firelink/compare/v0.7.69...v0.7.70) (2021-12-11)
+
+
+
 ## [0.7.69](https://github.com/rxdi/firelink/compare/v0.7.68...v0.7.69) (2021-12-11)
 
 
