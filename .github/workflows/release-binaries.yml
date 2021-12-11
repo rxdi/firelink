@@ -22,6 +22,8 @@ jobs:
         run: npm i -g @gapi/cli @zeit/ncc@0.22.1 pkg@4.4.7
       - name: Build
         run: npm run build-binary
+      - name: Build JS
+        run: npm run build
       - name: Read package.json Version
         uses: tyankatsu0105/read-package-version-actions@v1
         id: version
@@ -66,3 +68,13 @@ jobs:
           asset_path: ./binaries/firelink-macos
           asset_name: firelink-macos
           asset_content_type: application/octet-stream
+
+      - name: Upload JS to Releases
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/main.js
+          asset_name: main.js
+          asset_content_type: text/javascript
