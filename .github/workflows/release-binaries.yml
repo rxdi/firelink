@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci-skip]')"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,7 +36,8 @@ jobs:
           body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Upload Release
+
+      - name: Upload Firelink Linux to Release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -43,4 +45,24 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./binaries/firelink-linux
           asset_name: firelink-linux
+          asset_content_type: application/octet-stream
+
+      - name: Upload Firelink Windows to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./binaries/firelink-win.exe
+          asset_name: firelink-win.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+
+      - name: Upload Firelink MacOS to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./binaries/firelink-macos
+          asset_name: firelink-macos
           asset_content_type: application/octet-stream

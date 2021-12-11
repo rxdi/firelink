@@ -2,8 +2,9 @@ name: Publish
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - '*'
+
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
@@ -19,12 +20,7 @@ jobs:
       - run: npm test --if-present
       - run: git config --global user.email 'kristiqn.tachev@gmail.com'
       - run: git config --global user.name "Kristiyan Tachev"
-      - run: npm version patch
       - run: npm run build
-      - run: npm run publish-packages
+      - run: npm run publish-package
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
-      - uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true
