@@ -43,3 +43,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./binaries/firelink-linux
           asset_name: firelink-linux
+          asset_content_type: application/octet-stream
