@@ -1,3 +1,12 @@
+## [0.7.72](https://github.com/rxdi/firelink/compare/v0.7.71...v0.7.72) (2021-12-11)
+
+
+### Bug Fixes
+
+* **package.json:** added mkdir for binaries since the build was not working ([62036d9](https://github.com/rxdi/firelink/commit/62036d956afa0b5f8aba34ca922bbb4189423ccc))
+
+
+
 ## [0.7.71](https://github.com/rxdi/firelink/compare/v0.7.70...v0.7.71) (2021-12-11)
 
 
