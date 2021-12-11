@@ -1,3 +1,12 @@
+## [0.7.75](https://github.com/rxdi/firelink/compare/v0.7.74...v0.7.75) (2021-12-11)
+
+
+### Bug Fixes
+
+* **release:** added tsc to release for npm and added main.js file to be available when releasing tag inside github ([7c613a1](https://github.com/rxdi/firelink/commit/7c613a1d51212e25b6f8e97ce7323fbcafda1ca2))
+
+
+
 ## [0.7.74](https://github.com/rxdi/firelink/compare/v0.7.73...v0.7.74) (2021-12-11)
 
 
