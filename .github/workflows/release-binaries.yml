@@ -1,0 +1,27 @@
+name: Release binaries
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install
+        run: npm install
+      - name: Install Gapi CLI
+        run: npm i -g @gapi/cli @zeit/ncc@0.22.1 pkg@4.4.7
+      - name: Build
+        run: npm run build-binary
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            binaries/**
+            LICENSE
