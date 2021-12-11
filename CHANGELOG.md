@@ -1,18 +1,19 @@
-## [0.7.62](https://github.com/rxdi/firelink/compare/v0.7.59...v0.7.62) (2021-12-09)
+## [0.7.63](https://github.com/rxdi/firelink/compare/v0.7.62...v0.7.63) (2021-12-11)
 
 
-### Bug Fixes
+### Features
 
-* **exitHandler:** added await inside create-virtual-symlink ([0b83f78](https://github.com/rxdi/firelink/commit/0b83f78f68ef1da8dd66f2a85a35298383271566))
+* **binaries:** added a github action to release binaries based on tags ([5620385](https://github.com/rxdi/firelink/commit/5620385eff79856c70ef79e1feeea98927332598))
 
 
 
-## [0.7.59](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.59) (2021-12-09)
+## [0.7.62](https://github.com/rxdi/firelink/compare/017f8ee90d8b7eb26e5150fb963c2870cd4cce49...v0.7.62) (2021-12-09)
 
 
 ### Bug Fixes
 
 * **Dependencies:** https://github.com/rxdi/firelink/pull/3 ([017f8ee](https://github.com/rxdi/firelink/commit/017f8ee90d8b7eb26e5150fb963c2870cd4cce49))
+* **exitHandler:** added await inside create-virtual-symlink ([0b83f78](https://github.com/rxdi/firelink/commit/0b83f78f68ef1da8dd66f2a85a35298383271566))
 * **main:** when firebase crashes it is wrapped inside try catch causing to silend build fails ([9445747](https://github.com/rxdi/firelink/commit/944574740fbcb534540075b3b12d9bd8d982f9b3))
 * **packages:** on windows native fs introduced since the rsync behaviour differs ([d5b0bb4](https://github.com/rxdi/firelink/commit/d5b0bb491c14dc8bd635ccff5ca52bd63eefc72a))
 * **yarn:** version missmatch and wrong generated yarn.lock removed since we have package.lock.json ([7e0fce9](https://github.com/rxdi/firelink/commit/7e0fce993816629210f9abc1bab4961edc58d415))
