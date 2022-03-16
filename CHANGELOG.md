@@ -1,3 +1,12 @@
+# [0.8.0](https://github.com/rxdi/firelink/compare/v0.7.75...v0.8.0) (2022-03-16)
+
+
+### Features
+
+* **--no-runner:** added command to do the copy magic without running command at the end ([532df1b](https://github.com/rxdi/firelink/commit/532df1bdabbd816dc0dcd50c91ab8039ac8c54b5))
+
+
+
 ## [0.7.75](https://github.com/rxdi/firelink/compare/v0.7.74...v0.7.75) (2021-12-11)
 
 

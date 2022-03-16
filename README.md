@@ -119,6 +119,22 @@ After
 }
 ```
 
+#### No runner
+
+With argument `no-runner` no actual script will be executed after the copy logic.
+This will help us to benefit from the `firelink` to do his magic without running a command `firebase` or other specified inside `fireConfig.runner`. This way we can use the logic for firelink only to prepare the environment and change `package.json` with appropriate installation directory configured inside `fireDependencies`.
+It is recommended to be used with `--leave-changes` since it will create a temporary file called `package-temp.json` in order at some point to revert the side effects from running the command:
+
+```
+firelink --no-runner --leave-changes
+```
+
+Revert the changes made inside `package.json`
+
+```
+firelink --no-runner --revert-changes
+```
+
 # Configuration
 
 Default runner is command `firebase` but you can change it for example to `gcloud` or `serverless` by defining `fireConfig` inside `package.json`
