@@ -10,6 +10,7 @@ import {
   DEFAULT_RUNNER,
   FireLinkConfig,
   PackageJson,
+  Signals,
   Tasks,
   WorkingFiles,
 } from './injection-tokens';
@@ -51,21 +52,26 @@ export async function createVirtualSymlink(
       } catch (e) {}
     }
     process.stdin.resume();
-    process.on('exit', () => exitHandler(originalPackageJson, successStatus));
-    process.on('SIGINT', () => exitHandler(originalPackageJson, successStatus));
-    process.on('SIGUSR1', () =>
-      exitHandler(originalPackageJson, successStatus),
+    const signals: Signals[] = [
+      'exit',
+      'SIGINT',
+      'SIGUSR1',
+      'SIGUSR2',
+      'uncaughtException',
+    ];
+    signals.map(event =>
+      process.on(event as never, () =>
+        exitHandler(originalPackageJson, successStatus),
+      ),
     );
-    process.on('SIGUSR2', () =>
-      exitHandler(originalPackageJson, successStatus),
-    );
-    process.on('uncaughtException', () =>
-      exitHandler(originalPackageJson, successStatus),
-    );
+
     await modifyJson(packageJson, dependencies, outFolder, outFolderName);
   }
+
   try {
-    await runCommand(runner, process.argv);
+    if (!includes(Tasks.NO_RUNNER)) {
+      await runCommand(runner, process.argv);
+    }
     successStatus = true;
   } catch (e) {
   } finally {

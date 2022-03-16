@@ -36,6 +36,7 @@ export enum Tasks {
   REVERT = '--revert-changes',
   BUILD = '--buildCommand',
   LEAVE_CHANGES = '--leave-changes',
+  NO_RUNNER = '--no-runner',
 }
 
 export interface DependenciesLink {
@@ -44,3 +45,5 @@ export interface DependenciesLink {
 }
 
 export const isWin = process.platform === 'win32';
+
+export type Signals = NodeJS.Signals | 'exit' | 'uncaughtException';
