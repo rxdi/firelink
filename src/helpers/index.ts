@@ -12,3 +12,5 @@ export * from './revert-json';
 export * from './run-command';
 export * from './worker';
 export * from './write-file-json';
+export * from './lazy';
+export * from './exit-with-error';

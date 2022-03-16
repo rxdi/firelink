@@ -15,12 +15,14 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "noImplicitThis": false,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "outDir": "dist",
     "lib": ["es2017", "es2016", "es2015", "es6", "dom", "esnext.asynciterable"],
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types", "./types"]
   },
   "include": ["./src/**/*"],
   "exclude": ["./node_modules", "./src/**/*.spec.ts"]

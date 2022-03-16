@@ -6,6 +6,7 @@
   },
   "main": "./dist/index.js",
   "scripts": {
+    "start": "npx gapi start",
     "build": "npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node",
     "build-binary": "npx gapi build --single-executable && mkdir binaries && npm run copy-binaries",
     "build-all": "npm run build-binary && rm -rf dist && npm run build",
@@ -46,5 +47,8 @@
     "ts-jest": "25.2.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "commander": "^9.0.0"
   }
 }
