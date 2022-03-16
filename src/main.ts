@@ -1,42 +1,26 @@
 #! /usr/bin/env node
-// import { createVirtualSymlink } from './create-virtual-symlink';
-// import { readJson } from './helpers/read-json';
-// import {
-//   getOutFolder,
-//   getPackagesFolderName,
-//   WorkingFiles,
-// } from './injection-tokens';
-
-// (async () => {
-//   const packageJson = await readJson(WorkingFiles.PACKAGE_JSON);
-
-//   await createVirtualSymlink(
-//     packageJson,
-//     getOutFolder(packageJson),
-//     getPackagesFolderName(packageJson),
-//   );
-// })();
-
 import chalk from 'chalk';
 import { program } from 'commander';
 
 import pack from '../package.json';
-import { commands } from './commands';
-export const main = (argv: string[]) => {
-  program.name('firelink').version(pack.version);
+import { lazy } from './helpers';
 
-  commands.map(command => command(program));
+program.name('firelink').version(pack.version);
 
-  program.on('command:*', () => {
-    console.log();
-    console.log(chalk.red(`Invalid command: ${program.args.join(' ')}`));
-    console.log();
-    program.outputHelp();
-    process.exit(1);
-  });
+program
+  .option('--leave-changes', 'modify package.json and create package-temp.json')
+  .option('--revert-changes', 'revert package.json from package-temp.json')
+  .option('--no-runner', 'do not run the script after finish')
+  .option('--build', 'build every package with tsc command')
+  .description('https://github.com/rxdi/firelink')
+  .action(lazy(() => import('./default').then(m => m.default)));
 
-  program.parse(argv);
-};
-// process.argv.push('revert:changes');
-
-main(process.argv);
+program.on('command:*', () => {
+  console.log();
+  console.log(chalk.red(`Invalid command: ${program.args.join(' ')}`));
+  console.log();
+  program.outputHelp();
+  process.exit(1);
+});
+process.argv.push('-h');
+program.parse(process.argv);

@@ -22,7 +22,7 @@
     "noUnusedParameters": false,
     "outDir": "dist",
     "lib": ["es2017", "es2016", "es2015", "es6", "dom", "esnext.asynciterable"],
-    "typeRoots": ["node_modules/@types", "./types"]
+    "typeRoots": ["node_modules/@types", "typings.d.ts"]
   },
   "include": ["./src/**/*"],
   "exclude": ["./node_modules", "./src/**/*.spec.ts"]

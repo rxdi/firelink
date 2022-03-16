@@ -1,11 +1,25 @@
 This example assumes that you are mocking `npm` command specified inside file `package.json` and property `fireConfig` is configurated
 
 ```
-npx @rxdi/firelink@0.7.55 install
+npx firelink install
 ```
 
-Or if you have already installed firelink version 0.7.55 you can execute
+### Typescript
 
-```bash
-firelink install
+In order to transpile typescript to javascript there is a argument `--build` which will build with `tsc` every package
+
+```
+npx firelink install --build
+```
+
+### Specify default runner
+
+Inside `package.json` there is a property called `fireConfig` and inside of it we have a `runner`
+
+```json
+{
+  "fireConfig": {
+    "runner": "npm"
+  }
+}
 ```

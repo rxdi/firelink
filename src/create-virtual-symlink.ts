@@ -1,4 +1,3 @@
-import { includes } from './helpers/args-extractors';
 import { buildPackages } from './helpers/build-packages';
 import { copyPackages } from './helpers/copy-packages';
 import { exitHandler } from './helpers/exit-handler';
@@ -19,6 +18,7 @@ export async function createVirtualSymlink(
   packageJson: PackageJson = {} as PackageJson,
   outFolder: string,
   outFolderName: string,
+  tasks: Record<keyof typeof Tasks, Tasks>,
 ) {
   packageJson.fireConfig = packageJson.fireConfig || ({} as FireLinkConfig);
   let successStatus = false;
@@ -30,7 +30,7 @@ export async function createVirtualSymlink(
     )),
   ];
 
-  if (includes(Tasks.REVERT)) {
+  if (tasks.REVERT) {
     return await revertJson(
       WorkingFiles.PACKAGE_JSON,
       WorkingFiles.PACKAGE_TEMP_JSON,
@@ -46,7 +46,7 @@ export async function createVirtualSymlink(
       folder: linkedDepndencies[dep],
     }));
     await copyPackages(dependencies, outFolder, outFolderName, excludes);
-    if (includes(Tasks.BUILD)) {
+    if (tasks.BUILD) {
       try {
         await buildPackages(outFolder, outFolderName);
       } catch (e) {}
@@ -69,7 +69,7 @@ export async function createVirtualSymlink(
   }
 
   try {
-    if (!includes(Tasks.NO_RUNNER)) {
+    if (!tasks.NO_RUNNER) {
       await runCommand(runner, process.argv);
     }
     successStatus = true;

@@ -1,5 +1,5 @@
 import { createVirtualSymlink } from './create-virtual-symlink';
-import { PackageJson } from './injection-tokens';
+import { PackageJson, Tasks } from './injection-tokens';
 
 const mockBuildPackages = jest.fn();
 const mockCopyPackages = jest.fn();
@@ -45,21 +45,36 @@ describe('createVirtualSymlink', () => {
 
   it('should exit successfully if final command succeeds', async () => {
     mockRunCommand.mockImplementationOnce(() => Promise.resolve(true));
-    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
+    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName, {
+      BUILD: null,
+      LEAVE_CHANGES: null,
+      NO_RUNNER: null,
+      REVERT: null,
+    });
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
     expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, true);
   });
 
   it('should exit with error if final command fails', async () => {
     mockRunCommand.mockImplementationOnce(() => Promise.reject(false));
-    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
+    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName, {
+      BUILD: null,
+      LEAVE_CHANGES: null,
+      NO_RUNNER: null,
+      REVERT: null,
+    });
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
     expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, false);
   });
 
   it('should only revert json and exit if --revert-changes flag is present', async () => {
     process.argv.push('--revert-changes');
-    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
+    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName, {
+      BUILD: null,
+      LEAVE_CHANGES: null,
+      NO_RUNNER: null,
+      REVERT: Tasks.REVERT,
+    });
     expect(mockRevertJson).toHaveBeenCalledTimes(1);
     expect(mockRunCommand).toHaveBeenCalledTimes(0);
     expect(mockExitHandler).toHaveBeenCalledTimes(0);
@@ -68,7 +83,12 @@ describe('createVirtualSymlink', () => {
 
   it('should update dependencies if fireDependencies are present in original package.json', async () => {
     mockRunCommand.mockImplementationOnce(() => Promise.resolve(true));
-    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
+    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName, {
+      BUILD: null,
+      LEAVE_CHANGES: null,
+      NO_RUNNER: null,
+      REVERT: null,
+    });
     expect(mockCopyPackages).toHaveBeenCalledTimes(1);
     expect(mockModifyJson).toHaveBeenCalledTimes(1);
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
@@ -78,7 +98,12 @@ describe('createVirtualSymlink', () => {
   it('should build fireDependencies if --buildCommand flag is present', async () => {
     process.argv.push('--buildCommand');
     mockRunCommand.mockImplementationOnce(() => Promise.resolve(true));
-    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
+    await createVirtualSymlink(fakePackageJson, outFolder, outFolderName, {
+      BUILD: Tasks.BUILD,
+      LEAVE_CHANGES: null,
+      NO_RUNNER: null,
+      REVERT: null,
+    });
     expect(mockCopyPackages).toHaveBeenCalledTimes(1);
     expect(mockBuildPackages).toHaveBeenCalledTimes(1);
     expect(mockModifyJson).toHaveBeenCalledTimes(1);
