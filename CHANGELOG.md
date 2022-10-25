@@ -1,3 +1,12 @@
+## [0.8.2](https://github.com/rxdi/firelink/compare/v0.8.1...v0.8.2) (2022-10-25)
+
+
+### Bug Fixes
+
+* **package:** added npx parcel build command with specific version ([317cfb6](https://github.com/rxdi/firelink/commit/317cfb6b63d02ac7bd010954bb1991467b444741))
+
+
+
 ## [0.8.1](https://github.com/rxdi/firelink/compare/v0.8.0...v0.8.1) (2022-10-25)
 
 
