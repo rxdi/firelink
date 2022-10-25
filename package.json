@@ -11,6 +11,7 @@
     "build-all": "npm run build-binary && rm -rf dist && npm run build",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
+    "prepare": "husky install",
     "lint-fix": "npx eslint . --fix --ext .ts",
     "publish-package": "npm publish --update-readme --access public",
     "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . -r 0",
@@ -22,11 +23,6 @@
   ],
   "fireConfig": {
     "runner": "dir"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run test && npm run changelog && git add CHANGELOG.md"
-    }
   },
   "devDependencies": {
     "@rxdi/parcel-plugin-shebang": "^0.7.156",

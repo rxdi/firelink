@@ -1,3 +1,16 @@
+## [0.9.1](https://github.com/rxdi/firelink/compare/v0.9.0...v0.9.1) (2022-10-25)
+
+
+### Bug Fixes
+
+* **release:** added old version of nodejs due to cli incompatability ([0e279bf](https://github.com/rxdi/firelink/commit/0e279bf91dab80c6722b28b4dcc3ab0ab9f59b39))
+
+
+
+# [0.9.0](https://github.com/rxdi/firelink/compare/v0.8.2...v0.9.0) (2022-10-25)
+
+
+
 ## [0.8.2](https://github.com/rxdi/firelink/compare/v0.8.1...v0.8.2) (2022-10-25)
 
 
