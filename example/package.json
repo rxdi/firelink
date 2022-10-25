@@ -12,6 +12,7 @@
     "outFolderLocation": ".",
     "excludes": [
       "node_modules"
-    ]
+    ],
+    "useNativeCopy": true
   }
 }

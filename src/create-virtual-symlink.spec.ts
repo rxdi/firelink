@@ -12,7 +12,8 @@ jest.mock('./helpers/build-packages', () => ({
   buildPackages: async (...args: unknown[]) => mockBuildPackages(...args),
 }));
 jest.mock('./helpers/copy-packages', () => ({
-  copyPackages: (...args: unknown[]) => mockCopyPackages(...args),
+  copyPackages: (...args: unknown[]) => () => () => () => () =>
+    mockCopyPackages(...args),
 }));
 jest.mock('./helpers/exit-handler', () => ({
   exitHandler: (...args: unknown[]) => mockExitHandler(...args),

@@ -26,19 +26,20 @@ function copyOther(
   });
 }
 
-export function copyPackages(
-  dependencies: DependenciesLink[],
-  outFolder: string,
-  outFolderName: string,
-  excludes: string[],
-) {
-  return Promise.all(
-    dependencies.map(({ folder }) =>
-      isWin
-        ? FolderSync.copyFolderRecursive(folder, join(outFolder, outFolderName))
-        : copyOther(folder, outFolder, outFolderName, excludes),
-    ),
-  );
+export function copyPackages(dependencies: DependenciesLink[]) {
+  return (outFolder: string) => (outFolderName: string) => (
+    excludes: string[],
+  ) => (nativeCopyEnabled?: boolean) =>
+    Promise.all(
+      dependencies.map(({ folder }) =>
+        nativeCopyEnabled || isWin
+          ? FolderSync.copyFolderRecursive(
+              folder,
+              join(outFolder, outFolderName),
+            )
+          : copyOther(folder, outFolder, outFolderName, excludes),
+      ),
+    );
 }
 
 /* Cannot make it work to behave the same as rsync in windows for now */
