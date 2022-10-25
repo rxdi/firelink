@@ -28,7 +28,7 @@ export class FolderSync {
     if (sourceExists.isDirectory()) {
       const files = await promisify(readdir)(source);
       await Promise.all(
-        files.map(async file => {
+        files.map(async (file) => {
           const currrentSource = join(source, file);
           const isCurrentExists = await this.isExists(currrentSource);
 
@@ -40,7 +40,7 @@ export class FolderSync {
         }),
       );
     }
-    return new Promise<boolean>(resolve => {
+    return new Promise<boolean>((resolve) => {
       /**
        * There is a time between notifiyng the OS for saving files and saving them actually.
        * Lets wait 1 second for everything to finish and to be actually saved in the storage

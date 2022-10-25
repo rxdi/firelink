@@ -13,7 +13,7 @@ export async function runCommand(
       ...args
         .slice(2)
         .filter(
-          a =>
+          (a) =>
             a !== Tasks.LEAVE_CHANGES &&
             a !== Tasks.REVERT &&
             a !== Tasks.BUILD,

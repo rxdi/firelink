@@ -41,7 +41,7 @@ export async function createVirtualSymlink(
 
   if (packageJson.fireDependencies) {
     const linkedDepndencies = packageJson.fireDependencies;
-    const dependencies = Object.keys(linkedDepndencies).map(dep => ({
+    const dependencies = Object.keys(linkedDepndencies).map((dep) => ({
       dep,
       folder: linkedDepndencies[dep],
     }));
@@ -61,7 +61,7 @@ export async function createVirtualSymlink(
       'SIGUSR2',
       'uncaughtException',
     ];
-    signals.map(event =>
+    signals.map((event) =>
       process.on(event as never, () =>
         exitHandler(originalPackageJson, successStatus),
       ),
