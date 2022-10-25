@@ -4,6 +4,7 @@ export interface FireLinkConfig {
   outFolderName?: string;
   excludes?: string[];
   excludesFileName?: string;
+  useNativeCopy?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,6 +38,7 @@ export enum Tasks {
   BUILD = '--buildCommand',
   LEAVE_CHANGES = '--leave-changes',
   NO_RUNNER = '--no-runner',
+  USE_NATIVE_COPY = '--use-native-copy',
 }
 
 export interface DependenciesLink {

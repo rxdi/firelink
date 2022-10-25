@@ -135,6 +135,19 @@ Revert the changes made inside `package.json`
 firelink --no-runner --revert-changes
 ```
 
+#### Native Nodejs Copy instead of `rsync`
+
+This argument is introduced due to recent issue that has being made https://github.com/rxdi/firelink/issues/55
+It appears that in the newest nodejs 16 docker image rsync package is missing
+
+There is a way to specify which runner firelink will use
+when specify `--use-native-copy` it will default to nodejs implementation of recursive copy the files
+By default in windows environment this is the main method used to copy files since `rsync` is missing in windows
+
+```
+firelink --use-native-copy
+```
+
 # Configuration
 
 Default runner is command `firebase` but you can change it for example to `gcloud` or `serverless` by defining `fireConfig` inside `package.json`
@@ -145,7 +158,8 @@ Default runner is command `firebase` but you can change it for example to `gclou
     "runner": "firebase",
     "outFolderName": ".packages",
     "outFolderLocation": ".",
-    "excludes": ["node_modules"]
+    "excludes": ["node_modules"],
+    "useNativeCopy": true
   }
 }
 ```

@@ -45,7 +45,9 @@ export async function createVirtualSymlink(
       dep,
       folder: linkedDepndencies[dep],
     }));
-    await copyPackages(dependencies, outFolder, outFolderName, excludes);
+    await copyPackages(dependencies)(outFolder)(outFolderName)(excludes)(
+      includes(Tasks.USE_NATIVE_COPY) || packageJson.fireConfig.useNativeCopy,
+    );
     if (includes(Tasks.BUILD)) {
       try {
         await buildPackages(outFolder, outFolderName);

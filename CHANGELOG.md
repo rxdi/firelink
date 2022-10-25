@@ -1,3 +1,12 @@
+## [0.8.1](https://github.com/rxdi/firelink/compare/v0.8.0...v0.8.1) (2022-10-25)
+
+
+### Features
+
+* **copy:** added new argument which can be passed called use native copy which defaults to nodejs copy recursive ([d6d2c52](https://github.com/rxdi/firelink/commit/d6d2c522fc71cced8053b352614ac4891abd2875))
+
+
+
 # [0.8.0](https://github.com/rxdi/firelink/compare/v0.7.75...v0.8.0) (2022-03-16)
 
 
