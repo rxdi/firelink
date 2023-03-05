@@ -14,6 +14,7 @@ function copyOther(
     command: 'rsync',
     args: [
       '-r',
+      '--force',
       ...(excludes
         ? excludes.reduce(
             (prev, curr) => [...prev, '--exclude', curr],
