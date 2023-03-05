@@ -1,3 +1,13 @@
+## [0.9.2](https://github.com/rxdi/firelink/compare/v0.9.1...v0.9.2) (2023-03-05)
+
+
+### Bug Fixes
+
+* **husky:** added new husky file ([c72d910](https://github.com/rxdi/firelink/commit/c72d910eaa30e4fd1512f6a1e07a6e5aee208925))
+* **rsync:** added --force argument in order to test the idempotency of rsync ([09770e6](https://github.com/rxdi/firelink/commit/09770e6bc382b053f0207ff8f6a90f075587df74))
+
+
+
 ## [0.9.1](https://github.com/rxdi/firelink/compare/v0.9.0...v0.9.1) (2022-10-25)
 
 
