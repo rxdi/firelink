@@ -1,12 +1,10 @@
-import { Tasks } from '../injection-tokens';
-
 export const includes = (i: string) => process.argv.toString().includes(i);
 export const nextOrDefault = (
   i: string,
-  fb: boolean | string = true,
+  fb?: string,
   type = (p: string) => p,
 ) => {
-  if (process.argv.toString().includes(Tasks[i])) {
+  if (process.argv.toString().includes(i)) {
     const isNextArgumentPresent = process.argv[process.argv.indexOf(i) + 1];
     if (!isNextArgumentPresent) {
       return fb;

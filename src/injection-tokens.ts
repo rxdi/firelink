@@ -39,6 +39,7 @@ export enum Tasks {
   LEAVE_CHANGES = '--leave-changes',
   NO_RUNNER = '--no-runner',
   USE_NATIVE_COPY = '--use-native-copy',
+  RUNNER = '--runner',
 }
 
 export interface DependenciesLink {

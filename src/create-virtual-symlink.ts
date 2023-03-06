@@ -1,4 +1,4 @@
-import { includes } from './helpers/args-extractors';
+import { includes, nextOrDefault } from './helpers/args-extractors';
 import { buildPackages } from './helpers/build-packages';
 import { copyPackages } from './helpers/copy-packages';
 import { exitHandler } from './helpers/exit-handler';
@@ -22,7 +22,11 @@ export async function createVirtualSymlink(
 ) {
   packageJson.fireConfig = packageJson.fireConfig || ({} as FireLinkConfig);
   let successStatus = false;
-  const runner = packageJson.fireConfig.runner || DEFAULT_RUNNER;
+  const runner =
+    nextOrDefault(Tasks.RUNNER) ||
+    packageJson.fireConfig.runner ||
+    DEFAULT_RUNNER;
+
   const excludes = [
     ...(packageJson.fireConfig.excludes || []),
     ...(await readExcludes(
@@ -67,7 +71,7 @@ export async function createVirtualSymlink(
       ),
     );
 
-    await modifyJson(packageJson, dependencies, outFolder, outFolderName);
+    await modifyJson(packageJson, dependencies);
   }
 
   try {
