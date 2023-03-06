@@ -51,8 +51,6 @@ There are multiple binaries for `mac`, `windows` and `linux`
 There is only one tested in `linux` so keep in mind that for `mac` and `windows` may not work!
 If the binaries don't work in `mac` or `windows` please install it via `npm` globally with `npm i -g @rxdi/firelink`
 
-The tool assumes `@group/package-name` naming convention
-
 ## Usage
 
 #### Add `fireDependencies` inside `package.json`
@@ -172,6 +170,8 @@ so we want to not waste time duplicating node modules
 Equivalent of excludes inside package.json `.fireignore` can be specified as a file inside a directory where the command `firelink` will be executed. `.fireignore` behaviour is the same as `.gitignore`
 
 If you do not wish to use `.fireignore` file name the name can be specified from `fireConfig.excludesFileName`
+
+You can pass `--runner dir` argument to the command which will override the default runner `firebase`
 
 By default packages will be saved in `.packages` folder and `current` directory will be used
 U can change that by specifiyng properties `outFolderName` and `outFolderLocation` inside `fireConfig`

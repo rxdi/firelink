@@ -10,13 +10,9 @@ import {
 export async function modifyJson(
   packageJson: PackageJson,
   dependencies: DependenciesLink[],
-  outFolder: string,
-  outFolderName: string,
 ) {
-  for (const { dep } of dependencies) {
-    packageJson.dependencies[dep] = `file:${outFolder}/${outFolderName}/${
-      dep.includes('/') ? dep.split('/')[1] : dep
-    }`;
+  for (const { dep, folder } of dependencies) {
+    packageJson.dependencies[dep] = `file:${folder}`;
   }
   await promisify(writeFile)(
     WorkingFiles.PACKAGE_JSON,
