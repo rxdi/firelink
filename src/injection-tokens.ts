@@ -38,8 +38,8 @@ export enum Tasks {
   BUILD = '--buildCommand',
   LEAVE_CHANGES = '--leave-changes',
   NO_RUNNER = '--no-runner',
-  USE_NATIVE_COPY = '--use-native-copy',
   RUNNER = '--runner',
+  BOOTSTRAP = '--bootstrap',
 }
 
 export interface DependenciesLink {

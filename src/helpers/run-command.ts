@@ -12,12 +12,7 @@ export async function runCommand(
       runner,
       ...args
         .slice(2)
-        .filter(
-          (a) =>
-            a !== Tasks.LEAVE_CHANGES &&
-            a !== Tasks.REVERT &&
-            a !== Tasks.BUILD,
-        ),
+        .filter((a) => !Object.values(Tasks).includes(a as never)),
     ],
   });
 }

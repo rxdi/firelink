@@ -2,7 +2,7 @@ import { createVirtualSymlink } from './create-virtual-symlink';
 import { PackageJson } from './injection-tokens';
 
 const mockBuildPackages = jest.fn();
-const mockCopyPackages = jest.fn();
+// const mockCopyPackages = jest.fn();
 const mockExitHandler = jest.fn();
 const mockModifyJson = jest.fn();
 const mockRevertJson = jest.fn();
@@ -11,15 +11,15 @@ const mockRunCommand = jest.fn();
 jest.mock('./helpers/build-packages', () => ({
   buildPackages: async (...args: unknown[]) => mockBuildPackages(...args),
 }));
-jest.mock('./helpers/copy-packages', () => ({
-  copyPackages:
-    (...args: unknown[]) =>
-    () =>
-    () =>
-    () =>
-    () =>
-      mockCopyPackages(...args),
-}));
+// jest.mock('./helpers/copy-packages', () => ({
+//   copyPackages:
+//     (...args: unknown[]) =>
+//     () =>
+//     () =>
+//     () =>
+//     () =>
+//       mockCopyPackages(...args),
+// }));
 jest.mock('./helpers/exit-handler', () => ({
   exitHandler: (...args: unknown[]) => mockExitHandler(...args),
 }));
@@ -75,7 +75,7 @@ describe('createVirtualSymlink', () => {
   it('should update dependencies if fireDependencies are present in original package.json', async () => {
     mockRunCommand.mockImplementationOnce(() => Promise.resolve(true));
     await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
-    expect(mockCopyPackages).toHaveBeenCalledTimes(1);
+    // expect(mockCopyPackages).toHaveBeenCalledTimes(1);
     expect(mockModifyJson).toHaveBeenCalledTimes(1);
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
     expect(mockExitHandler).toHaveBeenCalledWith(fakePackageJson, true);
@@ -85,7 +85,7 @@ describe('createVirtualSymlink', () => {
     process.argv.push('--buildCommand');
     mockRunCommand.mockImplementationOnce(() => Promise.resolve(true));
     await createVirtualSymlink(fakePackageJson, outFolder, outFolderName);
-    expect(mockCopyPackages).toHaveBeenCalledTimes(1);
+    // expect(mockCopyPackages).toHaveBeenCalledTimes(1);
     expect(mockBuildPackages).toHaveBeenCalledTimes(1);
     expect(mockModifyJson).toHaveBeenCalledTimes(1);
     expect(mockRunCommand).toHaveBeenCalledTimes(1);
