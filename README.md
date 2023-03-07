@@ -67,11 +67,26 @@ If the binaries don't work in `mac` or `windows` please install it via `npm` glo
 
 #### Usage
 
+Bootstrapping the packages
+It will run `npm install` inside the current working directory
+This will install local packages referenced inside `fireDependencies`
+It means that `node_modules` folder will be already populated with appropriate packages after `npm install`
+
+```bash
+firelink --bootstrap --skip-runner
+```
+
+Deploying as usual
+
 ```bash
 firelink deploy
 ```
 
-The same as `firebase deploy` the only differance is that it will COPY monorepos replace package.json > dependencies with appropriate local file structure and then will revert changes after `firebase` script exit
+You can also use one liner replacement for `npm install` and `firebase deploy`
+
+```bash
+firelink deploy --bootstrap
+```
 
 #### Leave changes to package.json after command execution exited
 
@@ -133,19 +148,6 @@ Revert the changes made inside `package.json`
 firelink --no-runner --revert-changes
 ```
 
-#### Native Nodejs Copy instead of `rsync`
-
-This argument is introduced due to recent issue that has being made https://github.com/rxdi/firelink/issues/55
-It appears that in the newest nodejs 16 docker image rsync package is missing
-
-There is a way to specify which runner firelink will use
-when specify `--use-native-copy` it will default to nodejs implementation of recursive copy the files
-By default in windows environment this is the main method used to copy files since `rsync` is missing in windows
-
-```
-firelink --use-native-copy
-```
-
 # Configuration
 
 Default runner is command `firebase` but you can change it for example to `gcloud` or `serverless` by defining `fireConfig` inside `package.json`
@@ -153,29 +155,12 @@ Default runner is command `firebase` but you can change it for example to `gclou
 ```json
 {
   "fireConfig": {
-    "runner": "firebase",
-    "outFolderName": ".packages",
-    "outFolderLocation": ".",
-    "excludes": ["node_modules"],
-    "useNativeCopy": true
+    "runner": "firebase"
   }
 }
 ```
 
-`excludes` property can exclude some folders or files from being copied it accepts `Array` from `string`
-
-For example we may want to install dependencies of the packages when deploying using local npm path,
-so we want to not waste time duplicating node modules
-
-Equivalent of excludes inside package.json `.fireignore` can be specified as a file inside a directory where the command `firelink` will be executed. `.fireignore` behaviour is the same as `.gitignore`
-
-If you do not wish to use `.fireignore` file name the name can be specified from `fireConfig.excludesFileName`
-
 You can pass `--runner dir` argument to the command which will override the default runner `firebase`
-
-By default packages will be saved in `.packages` folder and `current` directory will be used
-U can change that by specifiyng properties `outFolderName` and `outFolderLocation` inside `fireConfig`
-Check `example` folder inside this repository
 
 You can put even `dir` command
 

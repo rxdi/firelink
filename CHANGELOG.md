@@ -1,3 +1,17 @@
+# [1.0.0-beta-0](https://github.com/rxdi/firelink/compare/v0.9.2...v1.0.0-beta-0) (2023-03-07)
+
+
+### Bug Fixes
+
+* removed namespacing and instead we use provided folder from fireDependencies the tool resolves now any package not only monorepo packages ([2184330](https://github.com/rxdi/firelink/commit/2184330fdc94c9ffe982940d98f24c7fa52ff161))
+
+
+### Features
+
+* **refactor:** whole logic is refactored to new one using commander ([06ec191](https://github.com/rxdi/firelink/commit/06ec1910b5785686303eed784acc2e9a40673980))
+
+
+
 ## [0.9.2](https://github.com/rxdi/firelink/compare/v0.9.1...v0.9.2) (2023-03-05)
 
 
