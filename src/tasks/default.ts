@@ -10,5 +10,5 @@ export default (options: Options) => async (args: Arguments) =>
     if (!packageJson) {
       throw new ExitCodeError(1, `Missing package.json`);
     }
-    UtilsService.createVirtualSymlink(tuple)(args);
+    return UtilsService.createVirtualSymlink(tuple)(args);
   });
