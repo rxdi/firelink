@@ -1,17 +1,11 @@
-import { createVirtualSymlink } from './create-virtual-symlink';
-import { readJson } from './helpers/read-json';
-import {
-  getOutFolder,
-  getPackagesFolderName,
-  WorkingFiles,
-} from './injection-tokens';
+#! /usr/bin/env node
+import { program } from 'commander';
 
-(async () => {
-  const packageJson = await readJson(WorkingFiles.PACKAGE_JSON);
+import packageJson from '../package.json';
+import { commands } from './tasks';
 
-  await createVirtualSymlink(
-    packageJson,
-    getOutFolder(packageJson),
-    getPackagesFolderName(packageJson),
-  );
-})();
+program.name(packageJson.name).version(packageJson.version);
+
+commands.map((command) => command(program));
+
+program.parse(process.argv);

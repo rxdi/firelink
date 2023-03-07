@@ -73,7 +73,7 @@ This will install local packages referenced inside `fireDependencies`
 It means that `node_modules` folder will be already populated with appropriate packages after `npm install`
 
 ```bash
-firelink --bootstrap --no-runner
+firelink --bootstrap --skip-runner
 ```
 
 Deploying as usual

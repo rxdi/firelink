@@ -6,9 +6,10 @@
   },
   "main": "./dist/index.js",
   "scripts": {
-    "build": "npx parcel@1.12.3 build ./src/main.ts --experimental-scope-hoisting --target node",
+    "start": "npx gapi start",
+    "build": "npx node build.mjs",
     "build-binary": "npx gapi build --single-executable && mkdir binaries && npm run copy-binaries",
-    "build-all": "npm run build-binary && rm -rf dist && npm run build",
+    "build-all": "npm run clean && npm run build-binary && rm -rf dist && npm run build",
     "test": "npx jest",
     "lint": "npx eslint . --ext .ts",
     "prepare": "husky install",
@@ -16,6 +17,7 @@
     "publish-package": "npm publish --update-readme --access public",
     "changelog": "npx conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . -r 0",
     "ammend-changelog": "git commit --amend --no-edit",
+    "clean": "rm -rf binaries dist",
     "copy-binaries": "cp -r ./dist/firelink-linux ./binaries && cp -r ./dist/firelink-macos ./binaries && cp -r ./dist/firelink-win.exe ./binaries"
   },
   "files": [
@@ -40,6 +42,7 @@
     "jest-cli": "29.2.2",
     "prettier": "^2.7.1",
     "ts-jest": "29.0.3",
+    "commander": "^9.0.0",
     "typescript": "^4.8.4"
   }
 }

@@ -3,21 +3,32 @@ import 'jest';
 import { readFile, unlink } from 'fs';
 import { promisify } from 'util';
 
-import { PackageJson } from '../injection-tokens';
-import { fileExists } from './file-exists';
-import { revertJson } from './revert-json';
-import { writeFileJson } from './write-file-json';
+import { PackageJson } from '../types';
+import { UtilsService } from './utils.service';
 
-describe('[RevertJson]: tests', () => {
+describe('[Util]: tests', () => {
+  it('Should write json file', async () => {
+    UtilsService.writeFileJson('package-test.json', {
+      dependencies: {},
+      fireDependencies: {},
+      fireConfig: {},
+    });
+    let isExists = await UtilsService.fileExists('package-test.json');
+    expect(isExists).toBeTruthy();
+    await promisify(unlink)('package-test.json');
+    isExists = await UtilsService.fileExists('package-test.json');
+    expect(isExists).toBeFalsy();
+  });
+
   it('Should revert package-temp.json', async () => {
     const testJsonFileName = 'package-temp2.json';
     const testJsonToSave = 'package-temp3.json';
-    writeFileJson(testJsonToSave, {
+    UtilsService.writeFileJson(testJsonToSave, {
       dependencies: { '@pesho/test': '0.0.1' },
       fireDependencies: {},
       fireConfig: {},
     });
-    writeFileJson(testJsonFileName, {
+    UtilsService.writeFileJson(testJsonFileName, {
       dependencies: { '@pesho/test': '0.0.1' },
       fireDependencies: {},
       fireConfig: {},
@@ -26,12 +37,12 @@ describe('[RevertJson]: tests', () => {
       await promisify(readFile)(testJsonFileName, { encoding: 'utf-8' }),
     );
     expect(file.dependencies['@pesho/test']).toBe('0.0.1');
-    revertJson(testJsonToSave, testJsonFileName);
+    UtilsService.revertJson(testJsonToSave, testJsonFileName);
     const modifiedJson: PackageJson = JSON.parse(
       await promisify(readFile)(testJsonToSave, { encoding: 'utf-8' }),
     );
     expect(modifiedJson.dependencies['@pesho/test']).toBe('0.0.1');
     await promisify(unlink)(testJsonToSave);
-    expect(await fileExists(testJsonToSave)).toBeFalsy();
+    expect(await UtilsService.fileExists(testJsonToSave)).toBeFalsy();
   });
 });
